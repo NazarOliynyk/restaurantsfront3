@@ -1,3 +1,37 @@
-<p>
-  admin works!
-</p>
+<h4>Admin Component</h4>
+
+
+<div  class="tableStyle" *ngIf="showClients">
+  <h4>All clients: </h4>
+  <table class="table table-hover"  >
+    <tr>
+      <th>Login of a User</th>
+      <th>Actions</th>
+
+    </tr>
+
+    <tr *ngFor="let u of clients">
+      <td>{{u.username}}</td>
+      <td> <button (click)="delete(u)">DELETE</button></td>
+    </tr>
+  </table>
+</div>
+
+<div  class="tableStyle" *ngIf="showRestaurants">
+  <h4>All restaurants: </h4>
+  <table class="table table-hover"  >
+    <tr>
+      <th>Login of a User</th>
+      <th>Actions</th>
+
+    </tr>
+
+    <tr *ngFor="let u of restaurants">
+      <td>{{u.username}}</td>
+      <td> <button (click)="delete(u)">DELETE</button></td>
+    </tr>
+  </table>
+</div>
+
+
+<router-outlet></router-outlet>

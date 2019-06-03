@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'restaurantsfront3';
+  constructor(private router: Router) { }
+  signIn() {
+    this.router.navigate(['register']);
+  }
+
+  logIn() {
+    this.router.navigate(['login']);
+  }
 }

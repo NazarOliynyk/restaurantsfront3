@@ -1,3 +1,83 @@
-<p>
-  logination works!
-</p>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<nav class="navbar " style="background: goldenrod">
+  <div class="container-fluid">
+    <h2>Log In Page</h2>
+    <button (click)="useLogin()" class="btn btn-primary">Log In with your LOGIN</button><br>
+    <button (click)="useEmail()" class="btn btn-primary">Log In with your EMAIL</button><br>
+    <button (click)="forgotPassword()" class="btn btn-primary">Forgot Password</button><br>
+  </div>
+</nav>
+
+<h3>{{responseLogination}}</h3>
+
+<form *ngIf="showLoginForm" #formLoginL="ngForm" class="logForm">
+
+  <label>Login:<br>
+    <input  [(ngModel)]="user.username" type="text" class="form-control"
+            [ngStyle]="{border: usernameRef.invalid && usernameRef.dirty?
+              '3px solid red': '3px solid green'}"
+            ngModel
+            #usernameRef = 'ngModel'
+            required minlength="4"
+            name="username" placeholder="username" size="10"></label><br>
+
+  <label>Password:<br>
+    <input [(ngModel)]="user.password" type="password" class="form-control"
+           [ngStyle]="{border: passwordRef.invalid && passwordRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #passwordRef = 'ngModel'
+           required minlength="4"
+           name="password" placeholder="password" size="10"></label><br>
+
+
+  <button [disabled]="formLoginL.invalid"
+          (click)="loginL(formLoginL)" type="button">Log In</button>
+</form>
+
+<form *ngIf="showEmailForm" #formLoginE="ngForm" class="logForm">
+
+  <label>Email:<br>
+    <input [(ngModel)]="user.email" type="email" class="form-control"
+           [ngStyle]="{border: emailRef.invalid && emailRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #emailRef = 'ngModel'
+           required email
+           name="email" placeholder="email" size="40"></label><br>
+
+  <label>Password:<br>
+    <input [(ngModel)]="user.password" type="password" class="form-control"
+           [ngStyle]="{border: passwordRef.invalid && passwordRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #passwordRef = 'ngModel'
+           required minlength="4"
+           name="password" placeholder="password" size="10"></label><br>
+
+  <button [disabled]="formLoginE.invalid"
+          (click)="loginE(formLoginE)" type="button">Log In</button>
+</form>
+
+
+<form *ngIf="showForgotPasswordForm" #emailRestorePassForm="ngForm" class="logForm">
+
+  <h3>New password will be sent to your email. Change it ASAP!
+    Otherwise it will be changed again automatically in 3 minutes.</h3>
+
+  <label>Set your email:<br>
+    <input  [(ngModel)]="emailToRestorePass" type="text" class="form-control"
+            [ngStyle]="{border: emailRef.invalid && emailRef.dirty?
+              '3px solid red': '3px solid green'}"
+            ngModel
+            #emailRef = 'ngModel'
+            required email
+            name="emailToRestorePass" placeholder="email" size="20"></label><br>
+  <button [disabled]="emailRestorePassForm.invalid"
+          (click)="sendRequestNewPass(emailToRestorePass)" >Send Request</button>
+</form>
+
+<p>{{responseChangePass}}</p>
+
+<router-outlet></router-outlet>

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {HttpHeaders} from '@angular/common/http';
+import {MainControllerService} from '../../../controllerServices/main-controller.service';
+import {Restaurant} from '../../../models/Restaurant';
 
 @Component({
   selector: 'app-restaurant',
@@ -7,9 +11,134 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RestaurantComponent implements OnInit {
 
-  constructor() { }
+  restaurant: Restaurant = new Restaurant();
+  restaurantToUpdate: Restaurant = new Restaurant();
+  showUpdateForm = false;
+  showInitialInfo = false;
+  headersOption: HttpHeaders;
+  oldPassword: string;
+  newPassword: string;
+  changePasswordF = false;
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private mainControllerService: MainControllerService,
+              private router: Router) { }
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((data: Restaurant) => {
+      this.restaurant = data;
+    });
+    this.headersOption =
+      new HttpHeaders({Authorization: localStorage.getItem('_token')});
   }
 
+  showInitialData() {
+    this.showInitialInfo = true;
+    this.showUpdateForm = false;
+    this.changePasswordF = false;
+    this.router.navigate(['restaurant'], {queryParams: this.restaurant});
+  }
+
+  showUpdate() {
+    this.showUpdateForm = true;
+    this.showInitialInfo = false;
+    this.changePasswordF = false;
+    this.router.navigate(['restaurant'], {queryParams: this.restaurant});
+  }
+
+  changePasswordForm() {
+    this.changePasswordF = true;
+    this.showInitialInfo = false;
+    this.showUpdateForm = false;
+    this.router.navigate(['restaurant'], {queryParams: this.restaurant});
+  }
+
+  goToMenuSections() {
+    this.changePasswordF = false;
+    this.showInitialInfo = false;
+    this.showUpdateForm = false;
+    this.router.navigate(['restaurant/menuSection'], {queryParams: this.restaurant});   }
+
+  goToMeals() {
+    this.changePasswordF = false;
+    this.showInitialInfo = false;
+    this.showUpdateForm = false;
+    this.router.navigate(['restaurant/meal'], {queryParams: this.restaurant});
+  }
+
+  goToOrders() {
+    this.changePasswordF = false;
+    this.showInitialInfo = false;
+    this.showUpdateForm = false;
+    this.router.navigate(['restaurant/ordersRestaurant'], {queryParams: this.restaurant});
+  }
+
+  updateRestaurant(formToBeUpdated: HTMLFormElement) {
+    this.restaurantToUpdate.id = this.restaurant.id;
+    this.restaurantToUpdate.username = this.restaurant.username;
+    this.restaurantToUpdate.password = this.restaurant.password;
+
+    if (this.restaurantToUpdate.name === '') {
+      this.restaurantToUpdate.name = this.restaurant.name;
+    }
+    if (this.restaurantToUpdate.address === '') {
+      this.restaurantToUpdate.address = this.restaurant.address;
+    }
+    if (this.restaurantToUpdate.email === '') {
+      this.restaurantToUpdate.email = this.restaurant.email;
+    }
+    if (this.restaurantToUpdate.phoneNumber === '') {
+      this.restaurantToUpdate.phoneNumber = this.restaurant.phoneNumber;
+    }
+    if (this.restaurantToUpdate.additionalInfo === '') {
+      this.restaurantToUpdate.additionalInfo = this.restaurant.additionalInfo ;
+    }
+    this.mainControllerService.updateRestaurant(
+      this.restaurantToUpdate, this.headersOption).
+    subscribe(value => {
+      alert(value.text);
+      this.mainControllerService.findRestaurant(this.restaurantToUpdate.id, this.headersOption).
+        subscribe(restaurant => this.restaurant = restaurant); },
+      error1 => alert('Failed To Update'));
+    // this.showUpdateForm = false;
+    // this.showReset = true;
+  }
+
+  sendPassword(changePasswordForm: HTMLFormElement) {
+    console.log(this.oldPassword);
+    console.log(this.newPassword);
+    this.mainControllerService.checkPassword(
+      this.restaurant.id, this.oldPassword, this.headersOption).
+    subscribe(value => { alert(value.text);
+                         if (value.text === 'PASSWORD MATCHES') {
+        this.restaurantToUpdate.id = this.restaurant.id;
+        this.restaurantToUpdate.username = this.restaurant.username;
+        this.restaurantToUpdate.email = this.restaurant.email;
+        this.restaurantToUpdate.password = this.newPassword;
+        this.restaurantToUpdate.additionalInfo = this.restaurant.additionalInfo;
+        this.restaurantToUpdate.address = this.restaurant.address;
+        this.mainControllerService.changePasswordRestaurant(this.restaurantToUpdate, this.headersOption).
+        subscribe(value1 => {alert( value1.text); },
+          err => {console.log('err: ' + err.toString());
+                  alert( 'Failed to update!'); } );
+        this.showUpdateForm = false;
+        this.changePasswordF = false;
+      } else {
+        alert( 'FAILED to update - PASSWORD DOES NOT MATCH');
+      }
+    });
+  }
+
+  deleteAccount() {
+    if (confirm('DO YOU REALLY WANT TO DELETE YOUR ACCOUNT???')) {
+
+      this.mainControllerService.deleteUser(this.restaurant.id, this.headersOption).
+      subscribe(data => {
+          alert(data.text);
+          this.router.navigate(['login']);
+        },
+        err => {console.log('err: ' + err.toString());
+                alert('Failed to delete!'); } );
+    }
+  }
 }

@@ -1,3 +1,111 @@
-<p>
-  restaurant works!
-</p>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<nav class="navbar " style="background: rosybrown">
+  <div class="container-fluid">
+    <h4>Restaurant Page</h4>
+    <button (click)="showInitialData()" class="btn btn-primary">Show my Data</button><br>
+    <button (click)="showUpdate()" class="btn btn-primary">Update my Data</button><br>
+    <button (click)="changePasswordForm()" class="btn btn-primary">Change Password</button><br>
+    <button (click)="goToMenuSections()" class="btn btn-primary">My sections of Menu</button><br>
+    <button (click)="goToMeals()" class="btn btn-primary">My meals</button><br>
+    <button (click)="goToOrders()" class="btn btn-primary">My orders</button><br>
+    <button (click)="deleteAccount()" class="btn btn-danger">Delete Account</button><br>
+  </div>
+</nav>
+
+<table *ngIf="showInitialInfo" class="initialData">
+  <tr>
+    <th>Login</th>
+    <td>{{restaurant.username}}</td>
+  </tr>
+  <tr>
+    <th>Restaurant name</th>
+    <td>{{restaurant.name}}</td>
+  </tr>
+  <tr>
+    <th>Restaurant address:</th>
+    <td>{{restaurant.address}}</td>
+  </tr>
+  <tr>
+    <th>Email</th>
+    <td>{{restaurant.email}}</td>
+  </tr>
+  <tr>
+    <th>Phone Number</th>
+    <td>{{restaurant.phoneNumber}}</td>
+  </tr>
+  <tr>
+    <th>Additional info</th>
+    <td>{{restaurant.additionalInfo}}</td>
+  </tr>
+</table>
+
+<form *ngIf="showUpdateForm" #formToBeUpdated="ngForm" >
+
+  <label>Name:
+    <input [ngModel]="restaurant.name" [(ngModel)]="restaurantToUpdate.name" type="text"
+           name="name" placeholder="name">
+  </label><br>
+
+  <label>Address:
+    <input [ngModel]="restaurant.address" [(ngModel)]="restaurantToUpdate.address" type="text"
+           name="address" placeholder="address" size="50">
+  </label><br>
+
+  <label>Email:
+    <input [ngModel]="restaurant.email" [(ngModel)]="restaurantToUpdate.email" type="email"
+           [ngStyle]="{border: emailRef.invalid && emailRef.dirty?
+           '3px solid red': '1px solid black'}"
+           ngModel
+           #emailRef = 'ngModel'
+           required email
+           name="email" placeholder="email">
+  </label><br>
+
+  <label>Phone Number:
+    <input [ngModel]="restaurant.phoneNumber" [(ngModel)]="restaurantToUpdate.phoneNumber" type="text"
+           [ngStyle]="{border: phoneNumberRef.invalid && phoneNumberRef.dirty?
+           '3px solid red': '1px solid black'}"
+           ngModel
+           #phoneNumberRef = 'ngModel'
+           required maxlength="12" pattern="\(?\d{3}\)?([-\/\.])\d{3}\1\d{4}"
+           name="phoneNumber" placeholder="999-999-9999">
+  </label><br>
+
+  <label>Additional Information:<br>
+    <textarea [ngModel]="restaurant.additionalInfo" [(ngModel)]="restaurantToUpdate.additionalInfo" type="text"
+           name="additionalInfo" placeholder="additionalInfo" style="width: 500px" rows="5">
+    </textarea>
+  </label><br>
+
+  <button [disabled]="formToBeUpdated.invalid"
+          (click)="updateRestaurant(formToBeUpdated)" type="button">Save Changes</button>
+</form>
+
+
+<form *ngIf="changePasswordF" #changePasswordForm="ngForm" class="changePasForm">
+
+  <label>Old Password:<br>
+    <input [(ngModel)]="oldPassword" type="password" class="form-control"
+           [ngStyle]="{border: OldPasswordRef.invalid && OldPasswordRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #OldPasswordRef = 'ngModel'
+           required minlength="4"
+           name="password" placeholder="password" size="10"></label><br>
+
+  <label>New Password:<br>
+    <input [(ngModel)]="newPassword" type="password" class="form-control"
+           [ngStyle]="{border: NewPasswordRef.invalid && NewPasswordRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #NewPasswordRef = 'ngModel'
+           required minlength="4"
+           name="password" placeholder="password" size="10"></label><br>
+
+  <button [disabled]="changePasswordForm.invalid"
+          (click)="sendPassword(changePasswordForm)">SET NEW PASSWORD</button><br>
+
+</form>
+
+<router-outlet></router-outlet>

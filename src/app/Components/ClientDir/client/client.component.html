@@ -1,3 +1,71 @@
-<p>
-  client works!
-</p>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<nav class="navbar " style="background: rosybrown">
+  <div class="container-fluid">
+    <h4>Client Page</h4>
+    <button (click)="showInitialData()" class="btn btn-primary">Show my Data</button><br>
+    <button (click)="showUpdate()" class="btn btn-primary">Update my Data</button><br>
+    <button (click)="changePasswordForm()" class="btn btn-primary">Change Password</button><br>
+    <button (click)="createOrder()" class="btn btn-primary">Create Order</button><br>
+    <button (click)="goToOrders()" class="btn btn-primary">My orders</button><br>
+    <button (click)="deleteAccount()" class="btn btn-danger">Delete Account</button><br>
+  </div>
+</nav>
+
+<table *ngIf="showInitialInfo" class="initialData">
+  <tr>
+    <th>Login</th>
+    <td>{{client.username}}</td>
+  </tr>
+
+  <tr>
+    <th>Email</th>
+    <td>{{client.email}}</td>
+  </tr>
+
+</table>
+
+<form *ngIf="showUpdateForm" #formToBeUpdated="ngForm" >
+
+
+  <label>Email:
+    <input [ngModel]="client.email" [(ngModel)]="clientToUpdate.email" type="email"
+           [ngStyle]="{border: emailRef.invalid && emailRef.dirty?
+           '3px solid red': '1px solid black'}"
+           ngModel
+           #emailRef = 'ngModel'
+           required email
+           name="email" placeholder="email">
+  </label><br>
+
+  <button [disabled]="formToBeUpdated.invalid"
+          (click)="updateClient(formToBeUpdated)" type="button">Save Changes</button>
+</form>
+
+
+<form *ngIf="changePasswordF" #changePasswordForm="ngForm" class="changePasForm">
+
+  <label>Old Password:<br>
+    <input [(ngModel)]="oldPassword" type="password" class="form-control"
+           [ngStyle]="{border: OldPasswordRef.invalid && OldPasswordRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #OldPasswordRef = 'ngModel'
+           required minlength="4"
+           name="password" placeholder="password" size="10"></label><br>
+
+  <label>New Password:<br>
+    <input [(ngModel)]="newPassword" type="password" class="form-control"
+           [ngStyle]="{border: NewPasswordRef.invalid && NewPasswordRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #NewPasswordRef = 'ngModel'
+           required minlength="4"
+           name="password" placeholder="password" size="10"></label><br>
+
+  <button [disabled]="changePasswordForm.invalid"
+          (click)="sendPassword(changePasswordForm)">SET NEW PASSWORD</button><br>
+
+</form>
+
+<router-outlet></router-outlet>

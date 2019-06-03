@@ -99,19 +99,6 @@ export class MainControllerService {
       this.url + '/getAvatars/' + restaurant.id, {headers: headersOption});
   }
 
-  // getFiles(restaurant: Restaurant, headersOption: HttpHeaders): Observable<File []> {
-  //   return this.http.get<File[]> (
-  //     this.url + '/getFiles/' + restaurant.id, {headers: headersOption});
-  // }
-  //
-  // getImages(restaurant: Restaurant, headersOption: HttpHeaders): Observable<any[]> {
-  //   return this.http.get<any[]> (
-  //     this.url + '/getImages/' + restaurant.id, {headers: headersOption});
-  //   pipe(map((response: Response) => {
-  //     return response;
-  //   }));
-  // }
-
   getMenuSections(restaurant: Restaurant, headersOption: HttpHeaders): Observable<MenuSection []> {
     return this.http.get<MenuSection []> (
       this.url + '/getMenuSections/' + restaurant.id, {headers: headersOption});

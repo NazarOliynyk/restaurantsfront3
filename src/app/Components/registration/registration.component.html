@@ -1,3 +1,116 @@
-<p>
-  registration works!
-</p>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<nav class="navbar " style="background: sandybrown">
+  <div class="container-fluid">
+    <h2>Registration Page</h2>
+    <button (click)="regRest()" class="btn btn-primary">Register a new Restaurant</button><br>
+    <button (click)="regClient()" class="btn btn-primary">Register a new Client</button><br>
+  </div>
+</nav>
+
+<h3 style="background: deeppink">{{responseRegistration}}</h3>
+
+<form class="regForm"> <h3>Registration forms:</h3>
+<form *ngIf="chooseFormRestaurant" #formRegisterR="ngForm">
+
+  <label>Login:<br>
+    <input  [(ngModel)]="restaurant.username" type="text" class="form-control"
+            [ngStyle]="{border: usernameRef.invalid && usernameRef.dirty?
+              '3px solid red': '3px solid green'}"
+            ngModel
+            #usernameRef = 'ngModel'
+            required minlength="4"
+            name="username" placeholder="username" size="10"></label><br>
+
+  <label>Password:<br>
+    <input [(ngModel)]="restaurant.password" type="password" class="form-control"
+           [ngStyle]="{border: passwordRef.invalid && passwordRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #passwordRef = 'ngModel'
+           required minlength="4"
+           name="password" placeholder="password" size="10"></label><br>
+
+  <label>Name of the Restaurant:<br>
+    <input [(ngModel)]="restaurant.name" type="text" class="form-control"
+           [ngStyle]="{border: nameRef.invalid && nameRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #nameRef = 'ngModel'
+           required
+           name="name" placeholder="name" size="40"></label><br>
+
+  <label>Address of the Restaurant:<br>
+    <input [(ngModel)]="restaurant.address" type="text" class="form-control"
+           [ngStyle]="{border: addressRef.invalid && addressRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #addressRef = 'ngModel'
+           required
+           name="address" placeholder="address" size="80"></label><br>
+
+  <label>Email:<br>
+    <input [(ngModel)]="restaurant.email" type="email" class="form-control"
+           [ngStyle]="{border: emailRef.invalid && emailRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #emailRef = 'ngModel'
+           required email
+           name="email" placeholder="email" size="40"></label><br>
+
+  <label>Phone Number:<br>
+    <input [(ngModel)]="restaurant.phoneNumber" type="text" class="form-control"
+           [ngStyle]="{border: phoneNumberRef.invalid && phoneNumberRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #phoneNumberRef = 'ngModel'
+           required maxlength="12" pattern="\(?\d{3}\)?([-\/\.])\d{3}\1\d{4}"
+           name="phone number" placeholder="999-999-9999" size="12"></label><br>
+
+  <label>Additional Information (Optional):<br>
+    <textarea [(ngModel)]="restaurant.additionalInfo" type="text" class="form-control"
+              rows="5"
+              name="additionalInfo" placeholder="additional information" style="width: 500px">
+    </textarea></label><br>
+
+  <button [disabled]="formRegisterR.invalid"
+          (click)="registerRestaurant(formRegisterR)" type="button">Sign In</button>
+</form>
+
+<form *ngIf="chooseFormClient" #formRegisterC="ngForm">
+
+  <label>Login:<br>
+    <input  [(ngModel)]="client.username" type="text" class="form-control"
+            [ngStyle]="{border: usernameRef.invalid && usernameRef.dirty?
+              '3px solid red': '3px solid green'}"
+            ngModel
+            #usernameRef = 'ngModel'
+            required minlength="4"
+            name="username" placeholder="username" size="10"></label><br>
+
+  <label>Password:<br>
+    <input [(ngModel)]="client.password" type="password" class="form-control"
+           [ngStyle]="{border: passwordRef.invalid && passwordRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #passwordRef = 'ngModel'
+           required minlength="4"
+           name="password" placeholder="password" size="10"></label><br>
+
+  <label>Email:<br>
+    <input [(ngModel)]="client.email" type="email" class="form-control"
+           [ngStyle]="{border: emailRef.invalid && emailRef.dirty?
+              '3px solid red': '3px solid green'}"
+           ngModel
+           #emailRef = 'ngModel'
+           required email
+           name="email" placeholder="email" size="40"></label><br>
+
+  <button [disabled]="formRegisterC.invalid"
+          (click)="registerClient(formRegisterC)" type="button">Sign In</button>
+</form>
+
+</form>
+<router-outlet></router-outlet>
+
+
