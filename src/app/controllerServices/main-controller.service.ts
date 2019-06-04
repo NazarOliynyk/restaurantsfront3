@@ -8,7 +8,7 @@ import {MenuSection} from '../Models/MenuSection';
 import {Meal} from '../Models/Meal';
 import {OrderMeal} from '../Models/OrderMeal';
 import {ResponseTransfer} from '../Models/ResponseTransfer';
-import {Avatar} from '../Models/Avatar';
+// import {Avatar} from '../Models/Avatar';
 
 @Injectable({
   providedIn: 'root'
@@ -92,11 +92,6 @@ export class MainControllerService {
   getClients(headersOption: HttpHeaders): Observable<Client[]> {
     return this.http.get<Client[]>(
       this.url + '/getClients', {headers: headersOption});
-  }
-
-  getAvatars(restaurant: Restaurant, headersOption: HttpHeaders): Observable<Avatar []> {
-    return this.http.get<Avatar[]> (
-      this.url + '/getAvatars/' + restaurant.id, {headers: headersOption});
   }
 
   getMenuSections(restaurant: Restaurant, headersOption: HttpHeaders): Observable<MenuSection []> {

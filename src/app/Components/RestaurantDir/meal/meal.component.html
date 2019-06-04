@@ -1,3 +1,126 @@
-<p>
-  meal works!
-</p>
+<button (click)="showAddForm()" class="btn-outline-dark">Add a meal</button>
+<button (click)="getListOfMeals(restaurant)" class="btn-outline-dark">Show All my Meals</button><br>
+
+<div *ngIf="showFormAddMeal" class="addForm">
+
+  <h5>Add a new Meal to the menu of your Restaurant:</h5><br>
+
+  <label >SECTION of MENU:
+    <select type="text" [(ngModel)]="menuSection.name" (change)="selected(name)" class="form-control">
+      <option  *ngFor="let ms of menuSections" value="{{ms.name}}">{{ms.name}}
+      </option>
+    </select></label>
+
+  <form *ngIf="showFormAddMeal"  #mealForm="ngForm">
+
+    <label>NAME of MEAL:
+      <input  [(ngModel)]="meal.name" type="text" class="form-control"
+              [ngStyle]="{border: mealNameRef.invalid && mealNameRef.dirty?
+              '3px solid red': '3px solid green'}"
+              ngModel
+              #mealNameRef = 'ngModel'
+              required
+              name="name" placeholder="name" size="30"></label>
+    <label>DESCRIPTION:
+      <textarea  [(ngModel)]="meal.description" type="text" class="form-control"
+              [ngStyle]="{border: mealDescriptionRef.invalid && mealDescriptionRef.dirty?
+              '3px solid red': '3px solid green'}"
+              ngModel
+              #mealDescriptionRef = 'ngModel'
+              required
+                 name="description" placeholder="description" style="width: 500px" rows="5"></textarea></label>
+    <label>QUANTITY:
+      <input  [(ngModel)]="meal.quantity" type="text" class="form-control"
+              [ngStyle]="{border: mealQuantityRef.invalid && mealQuantityRef.dirty?
+              '3px solid red': '3px solid green'}"
+              ngModel
+              #mealQuantityRef = 'ngModel'
+              required
+              name="quantity" placeholder="quantity" size="30"></label>
+
+    <label>PRICE:
+      <input  [(ngModel)]="priceOfMeal" type="text" class="form-control"
+              [ngStyle]="{border: mealPriceRef.invalid && mealPriceRef.dirty?
+              '3px solid red': '3px solid green'}"
+              ngModel
+              #mealPriceRef = 'ngModel'
+              required pattern="^\d+(\.|\,)\d{2}$"
+              name="priceOfMeal" placeholder="priceOfMeal" size="30" ></label>
+
+    <button [disabled]="mealForm.invalid" class="btn-outline-success"
+            (click)="saveMeal(mealForm)">Save Meal</button>
+
+  </form>
+</div>
+
+
+<form *ngIf="showListOfMeals" class="tableStyle">
+
+  <h4>The list of Meals </h4>
+
+  <table class="table table-hover"  >
+    <tr>
+      <th>SECTION of MENU</th>
+      <th>NAME</th>
+      <th>DESCRIPTION</th>
+      <th>QUANTITY</th>
+      <th>PRICE</th>
+      <th>IMAGE</th>
+      <th>ACTIONS</th>
+    </tr>
+    <tr *ngFor="let m of meals">
+      <td>{{m.menuSection.name}}</td>
+      <td>{{m.name}}</td>
+      <td>{{m.description}}</td>
+      <td>{{m.quantity}}</td>
+      <td>{{m.price}}</td>
+      <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
+      <td> <button (click)="update(m)" >UPDATE</button>
+        <button (click)="showAvatarForm(m)">Add or update an image</button>
+        <button (click)="delete(m)" >DELETE</button></td>
+    </tr>
+  </table>
+</form>
+
+<div *ngIf="showUpdateForm" class="updateForm">
+
+  <p>Update a meal:</p>
+  <label >Menu Section:
+    <select type="text" [(ngModel)]="menuSection.name" (change)="selected(name)">
+      <option  *ngFor="let ms of menuSections" value="{{ms.name}}">{{ms.name}}
+      </option>
+    </select></label><br>
+  <form  #formToBeUpdated >
+
+    <label>Name:
+      <input [ngModel]="meal.name" [(ngModel)]="mealToUpdate.name" type="text"
+             name="name" placeholder="name">
+    </label><br>
+    <label>Description:
+      <input [ngModel]="meal.description" [(ngModel)]="mealToUpdate.description" type="text"
+             name="description" placeholder="description">
+    </label><br>
+    <label>Quantity:
+      <input [ngModel]="meal.quantity" [(ngModel)]="mealToUpdate.quantity" type="text"
+             name="quantity" placeholder="quantity">
+    </label><br>
+    <label>Price:
+      <input [ngModel]="meal.price" [(ngModel)]="mealToUpdate.price" type="text"
+             name="price" placeholder="price">
+    </label><br>
+    <button  (click)="updateMeal(formToBeUpdated)" type="button">Save Changes</button>
+
+  </form>
+</div>
+
+<form *ngIf="showAvtarForm" #avatarForm class="updateImage">
+
+  <label>Add a new image to your Restaurant portfolio:<br>
+    <input type="file"  (change)="handleFileInput($event.target.files)"></label>
+
+  <button  (click)="saveAvatar(avatarForm)">Save image</button><br>
+
+  <label>Or Delete Existed:<br></label>
+  <div ><img [src]="'assets/images/'+meal.avatar" alt=""></div>
+  <button  (click)="deleteAvatar()">Delete Image</button><br>
+</form>

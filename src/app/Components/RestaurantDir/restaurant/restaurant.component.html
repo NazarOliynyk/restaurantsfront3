@@ -38,50 +38,71 @@
     <th>Additional info</th>
     <td>{{restaurant.additionalInfo}}</td>
   </tr>
+  <tr >
+    <th>Image</th>
+    <td *ngIf="showImage"><img [src]="'assets/images/'+restaurant.avatar" alt=""></td>
+  </tr>
+
 </table>
 
-<form *ngIf="showUpdateForm" #formToBeUpdated="ngForm" >
+<div *ngIf="showUpdateForm">
+  <div class="float-left">
+    <form  #formToBeUpdated="ngForm" class="updateForm">
 
-  <label>Name:
-    <input [ngModel]="restaurant.name" [(ngModel)]="restaurantToUpdate.name" type="text"
-           name="name" placeholder="name">
-  </label><br>
+      <label>Name:
+        <input [ngModel]="restaurant.name" [(ngModel)]="restaurantToUpdate.name" type="text"
+               name="name" placeholder="name">
+      </label><br>
 
-  <label>Address:
-    <input [ngModel]="restaurant.address" [(ngModel)]="restaurantToUpdate.address" type="text"
-           name="address" placeholder="address" size="50">
-  </label><br>
+      <label>Address:
+        <input [ngModel]="restaurant.address" [(ngModel)]="restaurantToUpdate.address" type="text"
+               name="address" placeholder="address" size="50">
+      </label><br>
 
-  <label>Email:
-    <input [ngModel]="restaurant.email" [(ngModel)]="restaurantToUpdate.email" type="email"
-           [ngStyle]="{border: emailRef.invalid && emailRef.dirty?
-           '3px solid red': '1px solid black'}"
-           ngModel
-           #emailRef = 'ngModel'
-           required email
-           name="email" placeholder="email">
-  </label><br>
+      <label>Email:
+        <input [ngModel]="restaurant.email" [(ngModel)]="restaurantToUpdate.email" type="email"
+               [ngStyle]="{border: emailRef.invalid && emailRef.dirty?
+               '3px solid red': '1px solid black'}"
+               ngModel
+               #emailRef = 'ngModel'
+               required email
+               name="email" placeholder="email">
+      </label><br>
 
-  <label>Phone Number:
-    <input [ngModel]="restaurant.phoneNumber" [(ngModel)]="restaurantToUpdate.phoneNumber" type="text"
-           [ngStyle]="{border: phoneNumberRef.invalid && phoneNumberRef.dirty?
-           '3px solid red': '1px solid black'}"
-           ngModel
-           #phoneNumberRef = 'ngModel'
-           required maxlength="12" pattern="\(?\d{3}\)?([-\/\.])\d{3}\1\d{4}"
-           name="phoneNumber" placeholder="999-999-9999">
-  </label><br>
+      <label>Phone Number:
+        <input [ngModel]="restaurant.phoneNumber" [(ngModel)]="restaurantToUpdate.phoneNumber" type="text"
+               [ngStyle]="{border: phoneNumberRef.invalid && phoneNumberRef.dirty?
+               '3px solid red': '1px solid black'}"
+               ngModel
+               #phoneNumberRef = 'ngModel'
+               required maxlength="12" pattern="\(?\d{3}\)?([-\/\.])\d{3}\1\d{4}"
+               name="phoneNumber" placeholder="999-999-9999">
+      </label><br>
 
-  <label>Additional Information:<br>
-    <textarea [ngModel]="restaurant.additionalInfo" [(ngModel)]="restaurantToUpdate.additionalInfo" type="text"
-           name="additionalInfo" placeholder="additionalInfo" style="width: 500px" rows="5">
-    </textarea>
-  </label><br>
+      <label>Additional Information:<br>
+        <textarea [ngModel]="restaurant.additionalInfo" [(ngModel)]="restaurantToUpdate.additionalInfo" type="text"
+               name="additionalInfo" placeholder="additionalInfo" style="width: 500px" rows="5">
+        </textarea>
+      </label><br>
 
-  <button [disabled]="formToBeUpdated.invalid"
-          (click)="updateRestaurant(formToBeUpdated)" type="button">Save Changes</button>
-</form>
+      <button [disabled]="formToBeUpdated.invalid" class="btn-outline-success"
+              (click)="updateRestaurant(formToBeUpdated)" type="button">Save Changes</button>
+    </form>
+  </div>
+  <div class="float-left">
+    <form  #avatarForm class="updateImage">
 
+      <label>Add a new image to your Restaurant portfolio:<br>
+      <input type="file"  (change)="handleFileInput($event.target.files)"></label>
+
+      <button  (click)="saveAvatar(avatarForm)">Save image</button><br>
+
+      <label>Or Delete Existed:<br></label>
+      <div *ngIf="showImage"><img [src]="'assets/images/'+restaurant.avatar" alt=""></div>
+      <button  (click)="deleteAvatar()">Delete Image</button><br>
+    </form>
+  </div>
+</div>
 
 <form *ngIf="changePasswordF" #changePasswordForm="ngForm" class="changePasForm">
 

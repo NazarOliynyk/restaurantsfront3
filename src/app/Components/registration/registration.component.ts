@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MainControllerService} from '../../controllerServices/main-controller.service';
 import {Restaurant} from '../../models/Restaurant';
 import {Client} from '../../models/Client';
+import {RestaurantControllerService} from '../../controllerServices/restaurant-controller.service';
 
 @Component({
   selector: 'app-registration',
@@ -33,7 +34,6 @@ export class RegistrationComponent implements OnInit {
     this.chooseFormRestaurant = false;
   }
 
-
   registerRestaurant(formRegisterR: HTMLFormElement) {
     console.log(this.restaurant.username);
     console.log(this.restaurant.password);
@@ -41,11 +41,9 @@ export class RegistrationComponent implements OnInit {
 
     this.mainControllerService.saveRestaurant(this.restaurant)
       .subscribe(value => {
-          this.responseRegistration = value.text;
-          console.log(value.text); },
+          this.responseRegistration = value.text; },
         error1 => { console.log(error1);
                     this.responseRegistration = 'Registration Failed'; } );
-
   }
 
   registerClient(formRegisterC: HTMLFormElement) {

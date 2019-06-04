@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpHeaders} from '@angular/common/http';
 import {MainControllerService} from '../../../controllerServices/main-controller.service';
 import {Restaurant} from '../../../models/Restaurant';
+import {RestaurantControllerService} from '../../../controllerServices/restaurant-controller.service';
 
 @Component({
   selector: 'app-restaurant',
@@ -19,9 +20,12 @@ export class RestaurantComponent implements OnInit {
   oldPassword: string;
   newPassword: string;
   changePasswordF = false;
+  imageToLoad: File = null;
+  showImage = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private mainControllerService: MainControllerService,
+              private restaurantControllerService: RestaurantControllerService,
               private router: Router) { }
 
   ngOnInit() {
@@ -33,6 +37,12 @@ export class RestaurantComponent implements OnInit {
   }
 
   showInitialData() {
+    this.mainControllerService.findRestaurant(this.restaurant.id, this.headersOption).
+    subscribe(restaurant => this.restaurant = restaurant);
+
+    if (this.restaurant.avatar !== '') {
+      this.showImage = true;
+    }
     this.showInitialInfo = true;
     this.showUpdateForm = false;
     this.changePasswordF = false;
@@ -40,6 +50,11 @@ export class RestaurantComponent implements OnInit {
   }
 
   showUpdate() {
+    this.mainControllerService.findRestaurant(this.restaurant.id, this.headersOption).
+    subscribe(restaurant => this.restaurant = restaurant);
+    if (this.restaurant.avatar !== '') {
+      this.showImage = true;
+    }
     this.showUpdateForm = true;
     this.showInitialInfo = false;
     this.changePasswordF = false;
@@ -100,8 +115,29 @@ export class RestaurantComponent implements OnInit {
       this.mainControllerService.findRestaurant(this.restaurantToUpdate.id, this.headersOption).
         subscribe(restaurant => this.restaurant = restaurant); },
       error1 => alert('Failed To Update'));
-    // this.showUpdateForm = false;
-    // this.showReset = true;
+  }
+
+  handleFileInput(files: FileList) {
+    this.imageToLoad = files.item(0);
+  }
+
+
+  saveAvatar(avatarForm: HTMLFormElement) {
+    if (this.imageToLoad !== null) {
+      const formData: FormData = new FormData();
+      formData.append('file', this.imageToLoad);
+      this.restaurantControllerService.saveAvatarToRestaurant(this.restaurant.id, formData, this.headersOption).
+      subscribe(data => {alert( data.text);  },
+        error1 => alert( 'Failed to save!'));
+    }
+  }
+
+
+  deleteAvatar() {
+    console.log('DELETE AVATAR');
+    this.restaurantControllerService.deleteAvatarFromRestaurant(this.restaurant.id, this.headersOption).
+      subscribe(value => {alert(value.text); },
+      error1 => alert('Failed to delete image'));
   }
 
   sendPassword(changePasswordForm: HTMLFormElement) {

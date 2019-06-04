@@ -1,3 +1,48 @@
-<p>
-  menusection works!
-</p>
+
+
+<form *ngIf="showFormAddMenuSection" #menuSectionForm="ngForm" class="addForm">
+
+  <label>Add a new Menu Section to the menu of your Restaurant:<br>
+    <input  [(ngModel)]="menuSection.name" type="text" class="form-control"
+            [ngStyle]="{border: menuSectionRef.invalid && menuSectionRef.dirty?
+              '3px solid red': '3px solid green'}"
+            ngModel
+            #menuSectionRef = 'ngModel'
+            required
+            name="name" placeholder="name" size="30"></label>
+  <button [disabled]="menuSectionForm.invalid" class="btn-outline-success"
+          (click)="saveMenuSection(menuSectionForm)">Save Menu Section</button><br>
+</form>
+
+<button (click)="getListOfMenuSections(restaurant)" class="btn-outline-dark"
+    style="margin-left: 20px">Show All my Menu Sections</button><br>
+
+<form *ngIf="showListOfMenuSections" class="tableStyle">
+
+  <h4>The list of Menu Sections </h4>
+  <table class="table table-hover"  >
+    <tr>
+      <th>Section of menu</th>
+      <th>Actions</th>
+
+    </tr>
+
+    <tr *ngFor="let menuSection of menuSections">
+      <td>{{menuSection.name}}</td>
+      <td> <button (click)="update(menuSection)" >UPDATE</button>
+        <button (click)="delete(menuSection)" >DELETE</button></td>
+    </tr>
+  </table>
+</form>
+
+<form *ngIf="showUpdateForm" #formToBeUpdated class="updateForm">
+
+  <label>Name:
+    <input [ngModel]="menuSection.name"
+           [(ngModel)]="menuSectionToUpdate.name" type="text"
+           name="name" placeholder="name">
+  </label><br>
+
+  <button  (click)="updateMenuSection(formToBeUpdated)" type="button">Save Changes</button>
+
+</form>

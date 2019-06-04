@@ -3,22 +3,26 @@ import {User} from './User';
 import {MenuSection} from './MenuSection';
 import {Meal} from './Meal';
 import {OrderMeal} from './OrderMeal';
+// import {Avatar} from './Avatar';
 
 export class Restaurant extends User {
 
-  constructor(
-    public id: number = 0,
-    public username: string = '',
-    public password: string = '',
-    public name: string = '',
-    public address: string = '',
-    public email: string = '',
-    public phoneNumber: string = '',
-    public additionalInfo: string = '',
-    public restaurantPositiveResponses: number = 0,
-    public restaurantNegativeResponses: number = 0,
-    public menuSections: MenuSection [] = [],
-    public meals: Meal [] = [],
-    public orders: OrderMeal [] = []
-  ) { super(id, username, password , email); }
+    public id = 0;
+    public username = '';
+    public password = '';
+    public name = '';
+    public address = '';
+    public email = '';
+    public phoneNumber = '';
+    public additionalInfo = '';
+    public avatar = '';
+    public restaurantPositiveResponses = 0;
+    public restaurantNegativeResponses = 0;
+    public menuSections: MenuSection [] = [];
+    public meals: Meal [] = [];
+    public orders: OrderMeal [] = [];
+
+  constructor() {
+    super();
+  }
 }

@@ -73,7 +73,7 @@
               name="additionalInfo" placeholder="additional information" style="width: 500px">
     </textarea></label><br>
 
-  <button [disabled]="formRegisterR.invalid"
+  <button [disabled]="formRegisterR.invalid" class="btn-outline-success"
           (click)="registerRestaurant(formRegisterR)" type="button">Sign In</button>
 </form>
 
@@ -106,7 +106,7 @@
            required email
            name="email" placeholder="email" size="40"></label><br>
 
-  <button [disabled]="formRegisterC.invalid"
+  <button [disabled]="formRegisterC.invalid" class="btn-outline-success"
           (click)="registerClient(formRegisterC)" type="button">Sign In</button>
 </form>
 

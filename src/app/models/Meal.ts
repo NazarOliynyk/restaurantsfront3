@@ -2,7 +2,7 @@
 import {MenuSection} from './MenuSection';
 import {Restaurant} from './Restaurant';
 import {OrderMeal} from './OrderMeal';
-import {Avatar} from './Avatar';
+// import {Avatar} from './Avatar';
 
 export class Meal {
 
@@ -10,11 +10,11 @@ export class Meal {
   public name = '';
   public description = '';
   public quantity = '';
-  public price: any;
+  public price = 0;
   public menuSection: MenuSection;
   public restaurant: Restaurant = new Restaurant();
   public orders: OrderMeal [] = [];
-  public avatar: Avatar
+  public avatar = '';
 
 
   constructor() {

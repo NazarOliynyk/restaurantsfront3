@@ -38,14 +38,24 @@ export class RestaurantControllerService {
       this.url + '/deleteMeal/' + id, {headers: headersOption});
   }
 
-  saveAvatar(id: number, image: FormData, headersOption: HttpHeaders): Observable<ResponseTransfer> {
+  saveAvatarToRestaurant(id: number, image: FormData, headersOption: HttpHeaders): Observable<ResponseTransfer> {
     return this.http.post<ResponseTransfer>(
-      this.url + '/saveAvatar/' + id, image, {headers: headersOption});
+      this.url + '/saveAvatarToRestaurant/' + id, image, {headers: headersOption});
   }
 
-  deleteAvatar(id: number, headersOption: HttpHeaders): Observable<ResponseTransfer> {
+  saveAvatarToMeal(id: number, image: FormData, headersOption: HttpHeaders): Observable<ResponseTransfer> {
+    return this.http.post<ResponseTransfer>(
+      this.url + '/saveAvatarToMeal/' + id, image, {headers: headersOption});
+  }
+
+  deleteAvatarFromRestaurant(id: number, headersOption: HttpHeaders): Observable<ResponseTransfer> {
     return this.http.delete<ResponseTransfer>(
-      this.url + '/deleteAvatar/' + id, {headers: headersOption});
+      this.url + '/deleteAvatarFromRestaurant/' + id, {headers: headersOption});
+  }
+
+  deleteAvatarFromMeal(id: number, headersOption: HttpHeaders): Observable<ResponseTransfer> {
+    return this.http.delete<ResponseTransfer>(
+      this.url + '/deleteAvatarFromMeal/' + id, {headers: headersOption});
   }
 
   findClientByOrderId(id: number, headersOption: HttpHeaders): Observable<Client> {
