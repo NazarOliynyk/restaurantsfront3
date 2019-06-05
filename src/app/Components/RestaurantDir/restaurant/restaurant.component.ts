@@ -108,6 +108,7 @@ export class RestaurantComponent implements OnInit {
     if (this.restaurantToUpdate.additionalInfo === '') {
       this.restaurantToUpdate.additionalInfo = this.restaurant.additionalInfo ;
     }
+    this.restaurantToUpdate.avatar = this.restaurant.avatar;
     this.mainControllerService.updateRestaurant(
       this.restaurantToUpdate, this.headersOption).
     subscribe(value => {

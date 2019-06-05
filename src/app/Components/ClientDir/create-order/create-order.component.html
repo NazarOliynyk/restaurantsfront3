@@ -1,3 +1,80 @@
-<p>
-  create-order works!
-</p>
+
+<div *ngIf="showRestaurantList" class="tableStyle">
+  <h4>The list of Restaurants </h4>
+
+    <table class="table table-hover"  >
+      <tr>
+        <th>IMAGE</th>
+        <th>NAME</th>
+        <th>ADDRESS</th>
+        <th>EMAIL</th>
+        <th>PHONE NUMBER</th>
+        <th>ADDITIONAL INFORMATION</th>
+        <th>ACTIONS</th>
+      </tr>
+      <tr *ngFor="let r of restaurants">
+        <td *ngIf=" r.avatar!=='' "><img [src]="'assets/images/'+r.avatar" alt=""></td>
+        <td>{{r.name}}</td>
+        <td>{{r.address}}</td>
+        <td>{{r.email}}</td>
+        <td>{{r.phoneNumber}}</td>
+        <td>{{r.additionalInfo}}</td>
+        <td> <button (click)="goToThisRestaurant(r)" >Visit</button></td>
+      </tr>
+    </table>
+</div>
+
+
+<div *ngIf="showFillOrder" class="d-flex flex-wrap align-content-start">
+
+  <div class="p-2 border" style="background: darksalmon">
+    <h4>Sections of Menu:</h4>
+    <div>
+      <div *ngFor="let ms of menuSections" class="msField">
+        <br><button (click)="goToMenuSection(ms)" class="btn btn-outline-primary btn-lg">{{ms.name}}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-2 border flex-grow-1" style="background: goldenrod">
+    <h4>The list of Meals of {{menuSection.name}}</h4>
+
+    <table class="table table-hover"  >
+      <tr>
+        <th class="fontLabel">IMAGE</th>
+        <th class="fontLabel">NAME</th>
+        <th class="fontLabel">DESCRIPTION</th>
+        <th class="fontLabel">QUANTITY</th>
+        <th class="fontLabel">PRICE UAH</th>
+        <th class="fontLabel">EUR</th>
+        <th class="fontLabel">USD</th>
+        <th class="fontLabel">PLN</th>
+        <th class="fontLabel">ACTIONS</th>
+      </tr>
+      <tr *ngFor="let m of mealsOfMS">
+        <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
+        <td>{{m.name}}</td>
+        <td>{{m.description}}</td>
+        <td>{{m.quantity}}</td>
+        <td>{{m.price}}</td>
+        <td>{{m.price*eur | number: '1.2-2'}}</td>
+        <td>{{m.price*usd | number: '1.2-2'}}</td>
+        <td>{{m.price*pln | number: '1.2-2'}}</td>
+        <td>
+          <button (click)="addMeal(m)" class="btn btn-outline-primary btn-sm">ADD</button></td>
+      </tr>
+    </table>
+  </div>
+  <div class="p-2 border" style="background: tan">
+    <h4>Preliminary Menu:</h4>
+    <div *ngIf="showPreliminaryMenu">
+      <div *ngFor="let m of mealsToBeAdded" class="msField">
+        <img [src]="'assets/images/'+m.avatar" alt="">
+        {{m.name}}
+        <br><button (click)="removeFromPreliminaryMenu(m)" class="btn btn-outline-primary btn-sm">Remove</button>
+      </div>
+      <button (click)="createOrder()" class="btn btn-outline-success">Create Order</button>
+    </div>
+  </div>
+</div>
+

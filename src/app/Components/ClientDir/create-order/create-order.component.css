@@ -1,0 +1,28 @@
+button{
+  margin: 10px;
+}
+img{
+  width: 70px;
+  height: 70px;
+  border-radius: 15px;
+}
+.tableStyle {
+  width: 95%;
+  background: salmon;
+  margin-left: 30px;
+  border: 2px solid black;
+}
+
+.msField{
+  border: 1px solid whitesmoke;
+  border-radius: 2px;
+}
+
+.fontLabel{
+  font-size: smaller;
+}
+
+/*.prelimBlock{*/
+  /*border: 1px solid whitesmoke;*/
+  /*border-radius: 2px;*/
+/*}*/

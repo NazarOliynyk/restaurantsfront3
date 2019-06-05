@@ -58,6 +58,10 @@ export class RestaurantControllerService {
       this.url + '/deleteAvatarFromMeal/' + id, {headers: headersOption});
   }
 
+  getRates(headersOption: HttpHeaders): Observable<ResponseTransfer> {
+    return this.http.get<ResponseTransfer>(this.url + '/getRates', {headers: headersOption});
+  }
+
   findClientByOrderId(id: number, headersOption: HttpHeaders): Observable<Client> {
     return this.http.get<Client>(
       this.url + '/findClientByOrderId/' + id, {headers: headersOption});
