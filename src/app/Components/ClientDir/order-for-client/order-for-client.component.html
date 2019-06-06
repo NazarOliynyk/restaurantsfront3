@@ -1,3 +1,76 @@
-<p>
-  order-for-client works!
-</p>
+
+<div class="buttonBlock">
+      <button (click)="backToAccount()">Get Back to my Account</button>
+      <button (click)="watchAllOrders()">Watch all my Orders</button>
+</div>
+
+<form class="inputForm" *ngIf="reasonOfCancelationInput" #responsePositiveForm>
+  Comment cancellation of order from: {{order.date| date}}<br>
+  <textarea [(ngModel)]="reasonOfCancelation"
+            name="responseString"
+            type="text" placeholder="responseString"
+            rows="3" style="width: 370px"></textarea><br>
+  <button (click)="cancellTotally(responsePositiveForm)">Post RESPONSE</button>
+</form>
+
+<form class="inputForm" *ngIf="responsePositiveInput" #responsePositiveForm>
+  Comment positive response of order from: {{order.date| date}}<br>
+  <textarea [(ngModel)]="responsePositiveString"
+            name="responseString"
+            type="text" placeholder="responseString"
+            rows="3" style="width: 370px"></textarea><br>
+  <button (click)="makePositiveResponse(responsePositiveForm)">Post RESPONSE</button>
+</form>
+
+<form class="inputForm" *ngIf="responseNegativeInput" #responsePositiveForm>
+  Comment negative response of order from: {{order.date| date}}<br>
+  <textarea [(ngModel)]="responseNegativeString"
+            name="responseString"
+            type="text" placeholder="responseString"
+            rows="3" style="width: 370px"></textarea><br>
+  <button (click)="makeNegativeResponse(responsePositiveForm)">Post RESPONSE</button>
+</form>
+
+
+<form *ngIf="showMealsOfOrder" class="tableClass">
+  <h5>The list of meals of order: {{order.date | date: 'yyyy-MM-dd'}} in {{order.restaurant.name}}</h5>
+  <table class="table table-hover" >
+    <tr>
+      <th >IMAGE</th>
+      <th >NAME</th>
+      <th >DESCRIPTION</th>
+      <th >QUANTITY</th>
+      <th >PRICE UAH</th>
+    </tr>
+    <tr *ngFor="let m of mealsOfOrder">
+      <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
+      <td>{{m.name}}</td>
+      <td>{{m.description}}</td>
+      <td>{{m.quantity}}</td>
+      <td>{{m.price | number: '1.2-2'}}</td>
+    </tr>
+  </table>
+
+</form>
+
+
+<form *ngIf="showOrderList">
+
+  <div class="flex-container-5" >
+
+    <div *ngFor="let o of orders" class="flex-container1-div" >
+      DATE: {{o.date | date: 'yyyy-MM-dd'}} <br>
+      RESTAURANT: {{o.restaurant.name}} <br>
+      STATUS: {{o.orderStatus}} <br>
+      <button (click)="getOrderMeals(o)">Show Meals</button>
+      <!--*ngIf="o.orderStatus == JUST_ORDERED"-->
+      <button (click)="deleteOrder(o)">Delete Order</button>
+      <button (click)="cancelOrder(o)">Cancel</button>
+      <button (click)="orderServed(o)">Order Served </button>
+      <button (click)="positiveResponse(o)">Positive Response </button>
+      <button (click)="negativeResponse(o)">Negative Response </button>
+    </div><br>
+  </div>
+</form>
+
+

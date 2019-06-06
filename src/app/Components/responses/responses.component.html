@@ -1,3 +1,67 @@
-<p>
-  responses works!
-</p>
+
+<div>
+  <div *ngIf="showResponsesOfRestaurant" class="tableStyle">
+    <h3>Responses of Restaurant: {{restaurant.name}}</h3>
+    <button (click)="getBackToRestaurantList()">Get to Restaurant List</button>
+    <table class="table table-bordered" >
+
+      <tr>
+        <th style="color: green">Positive</th>
+        <th >Neutral</th>
+        <th style="color: red">Negative</th>
+
+      </tr>
+      <tr *ngFor="let order of orders">
+
+        <td *ngIf="order.responseFromClient === 'POSITIVE'; else elseBlock">
+          date: {{order.date |  date: 'yyyy-MM-dd'}},
+        description: {{order.descriptionFromClient}}</td>
+
+        <td *ngIf="order.responseFromClient === 'NEUTRAL'; else elseBlock">
+          date: {{order.date |  date: 'yyyy-MM-dd'}},
+          description: {{order.descriptionFromClient}}</td>
+
+        <td *ngIf="order.responseFromClient === 'NEGATIVE'; else elseBlock">
+          date: {{order.date |  date: 'yyyy-MM-dd'}},
+          description: {{order.descriptionFromClient}}</td>
+
+      </tr>
+      <ng-template #elseBlock> <td>0</td></ng-template>
+    </table>
+  </div>
+</div>
+
+
+
+<div>
+  <div *ngIf="showResponsesOfClient" class="tableStyle">
+    <h3>Responses of Client: {{client.name}}</h3>
+    <button (click)="getBackToOrdersList()">Get to My Orders</button>
+    <table class="table table-bordered" >
+
+      <tr>
+        <th style="color: green">Positive</th>
+        <th >Neutral</th>
+        <th style="color: red">Negative</th>
+
+      </tr>
+      <tr *ngFor="let order of orders">
+
+        <td *ngIf="order.responseFromRestaurant === 'POSITIVE'; else elseBlock">
+          <p>date: {{order.date |  date: 'yyyy-MM-dd'}}</p>
+          <p>description: {{order.descriptionFromRestaurant}}</p></td>
+
+        <td *ngIf="order.responseFromRestaurant === 'NEUTRAL'; else elseBlock">
+          <p> date: {{order.date |  date: 'yyyy-MM-dd'}}</p>
+          <p>description: {{order.descriptionFromRestaurant}}</p></td>
+
+        <td *ngIf="order.responseFromRestaurant === 'NEGATIVE'; else elseBlock">
+          <p>date: {{order.date |  date: 'yyyy-MM-dd'}}</p>
+          <p>description: {{order.descriptionFromRestaurant}}</p></td>
+
+      </tr>
+      <ng-template #elseBlock> <td>0</td></ng-template>
+    </table>
+  </div>
+</div>
+

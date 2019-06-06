@@ -9,6 +9,7 @@ import {HttpHeaders} from '@angular/common/http';
 import {Meal} from '../../../models/Meal';
 import {MenuSection} from '../../../models/MenuSection';
 import {OrderMeal} from '../../../models/OrderMeal';
+import {RouterTruck} from '../../../models/RouterTruck';
 
 @Component({
   selector: 'app-create-order',
@@ -26,33 +27,18 @@ export class CreateOrderComponent implements OnInit {
   menuSection: MenuSection = new MenuSection();
   menuSections: MenuSection [] = [];
   mealsOfMS: Meal [] = [];
-  mealsOfOrder: Meal[] = [];
   mealsToBeAdded: Meal[] = [];
   order: OrderMeal = new OrderMeal();
-  orders: OrderMeal[] = [];
   showRestaurantList = true;
   eur: number;
   usd: number;
   pln: number;
   showFillOrder = false;
-  // avatars: Avatar [] = [];
-  // showMeals = false;
   showPreliminaryMenu = false;
   ids: number[] = [];
-  // showOrderList = false;
-  // responseOnAction = '';
-  // showMealsOfOrder = false;
-  // reasonOfCancelationInput = false;
-  // reasonOfCancelation = '';
-  // responsePositiveString = '';
-  // responsePositiveInput = false;
-  // responseNegativeInput = false;
-  // responseNegativeString = '';
-  // responseCreateOrder = '';
-  // showAvatars = false;
-  // showMenuSections = false;
-  // showMealsOfMenuSection = false;
-  //
+  total = 0;
+  routerTruck: RouterTruck;
+
   constructor(private activatedRoute: ActivatedRoute,
               private mainControllerService: MainControllerService,
               private restaurantControllerService: RestaurantControllerService,
@@ -60,8 +46,6 @@ export class CreateOrderComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.showFillOrder = false;
-    this.showRestaurantList = true;
     this.activatedRoute.queryParams.subscribe((data: Client) => {
       this.client = data;
       this.headersOption =
@@ -97,20 +81,27 @@ export class CreateOrderComponent implements OnInit {
     for (const m of this.mealsOfRestaurant) {
 
       if (m.menuSection.name === this.menuSection.name) {
-        console.log('RRRR: ' + m.name);
         this.mealsOfMS.push(m);
       }
     }
   }
 
   addMeal(m: Meal) {
+    this.total = 0;
     this.mealsToBeAdded.push(m);
+    for (const meal of this.mealsToBeAdded) {
+      this.total += meal.price;
+    }
     this.showPreliminaryMenu = true;
   }
 
   removeFromPreliminaryMenu(m: Meal) {
+    this.total = 0;
     const index = this.mealsToBeAdded.indexOf(m);
     this.mealsToBeAdded.splice(index, 1);
+    for (const meal of this.mealsToBeAdded) {
+      this.total += meal.price;
+    }
   }
 
   createOrder() {
@@ -121,5 +112,18 @@ export class CreateOrderComponent implements OnInit {
     subscribe( value => {alert(value.text);
                          this.router.navigate(['client/ordersClient'], {queryParams: this.client}); },
       error1 => {alert('Failed to create order'); });
+  }
+
+  backToRestaurants() {
+    this.showRestaurantList = true;
+    this.showFillOrder = false;
+  }
+
+  goToResponses(r) {
+    this.restaurant = r;
+    this.routerTruck = new RouterTruck(this.restaurant.id, this.client.id, 'client');
+    console.log('From createOrder: ' + this.routerTruck.restaurantId);
+    console.log('From createOrder: ' + this.routerTruck.clientId);
+    this.router.navigate(['responses'], {queryParams: this.routerTruck});
   }
 }

@@ -1,0 +1,66 @@
+
+button{
+  margin: 5px;
+}
+img{
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+}
+.buttonBlock{
+  width: 350px;
+  background: tan;
+  border-radius: 2px;
+  border: 2px solid yellow;
+  margin-left: 20px;
+}
+
+.flex-container1-div{
+  background-color: rosybrown;
+  border: 2px solid orange;
+  border-radius: 3px;
+  width: 300px;
+  height: 200px;
+  margin: 10px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px
+}
+.flex-container1-div-small{
+  background-color: rosybrown;
+  width: 200px;
+  height: 50px;
+  margin: 10px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px
+}
+.flex-container-5 {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tableClass{
+  background: lightcoral;
+  width: 80%;
+  margin: 25px;
+  border: 1px solid yellow;
+}
+.mealsOfOrder{
+  width: 550px;
+  height: auto;
+  background: burlywood;
+  border: 2px solid black;
+}
+.separateMeal{
+  border: 1px solid darkblue;
+}
+.inputForm{
+  width: 400px;
+  height: 160px;
+  background: chartreuse;
+  border: 1px solid crimson;
+  border-radius: 2px;
+  padding: 15px;
+  margin: 15px;
+}

@@ -4,13 +4,15 @@
 
     <table class="table table-hover"  >
       <tr>
-        <th>IMAGE</th>
-        <th>NAME</th>
-        <th>ADDRESS</th>
-        <th>EMAIL</th>
-        <th>PHONE NUMBER</th>
-        <th>ADDITIONAL INFORMATION</th>
-        <th>ACTIONS</th>
+        <th >IMAGE</th>
+        <th >NAME</th>
+        <th >ADDRESS</th>
+        <th >EMAIL</th>
+        <th >PHONE NUMBER</th>
+        <th >ADDITIONAL INFO</th>
+        <th >POSITIVE RESP</th>
+        <th >NEGATIVE RESP</th>
+        <th >ACTIONS</th>
       </tr>
       <tr *ngFor="let r of restaurants">
         <td *ngIf=" r.avatar!=='' "><img [src]="'assets/images/'+r.avatar" alt=""></td>
@@ -19,7 +21,13 @@
         <td>{{r.email}}</td>
         <td>{{r.phoneNumber}}</td>
         <td>{{r.additionalInfo}}</td>
-        <td> <button (click)="goToThisRestaurant(r)" >Visit</button></td>
+        <td >
+          <button (click)="goToResponses(r)" class="btn-outline-success btn-sm">
+            {{r.restaurantPositiveResponses}}</button></td>
+        <td >
+          <button (click)="goToResponses(r)" class="btn-outline-danger btn-sm">
+            {{r.restaurantNegativeResponses}}</button></td>
+        <td> <button (click)="goToThisRestaurant(r)" class="btn btn-primary btn-sm" >Visit</button></td>
       </tr>
     </table>
 </div>
@@ -37,19 +45,20 @@
   </div>
 
   <div class="p-2 border flex-grow-1" style="background: goldenrod">
+   <button (click)="backToRestaurants()">Back to Restaurant list</button>
     <h4>The list of Meals of {{menuSection.name}}</h4>
 
     <table class="table table-hover"  >
       <tr>
-        <th class="fontLabel">IMAGE</th>
-        <th class="fontLabel">NAME</th>
-        <th class="fontLabel">DESCRIPTION</th>
-        <th class="fontLabel">QUANTITY</th>
-        <th class="fontLabel">PRICE UAH</th>
-        <th class="fontLabel">EUR</th>
-        <th class="fontLabel">USD</th>
-        <th class="fontLabel">PLN</th>
-        <th class="fontLabel">ACTIONS</th>
+        <th >IMAGE</th>
+        <th >NAME</th>
+        <th >DESCRIPTION</th>
+        <th >QUANTITY</th>
+        <th >PRICE UAH</th>
+        <th >EUR</th>
+        <th >USD</th>
+        <th >PLN</th>
+        <th >ACTIONS</th>
       </tr>
       <tr *ngFor="let m of mealsOfMS">
         <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
@@ -69,10 +78,11 @@
     <h4>Preliminary Menu:</h4>
     <div *ngIf="showPreliminaryMenu">
       <div *ngFor="let m of mealsToBeAdded" class="msField">
-        <img [src]="'assets/images/'+m.avatar" alt="">
+        <img [src]="'assets/images/'+m.avatar" alt=""><br>
         {{m.name}}
         <br><button (click)="removeFromPreliminaryMenu(m)" class="btn btn-outline-primary btn-sm">Remove</button>
       </div>
+      <div>TOTAL: {{total | number: '1.2-2' }} UAH</div>
       <button (click)="createOrder()" class="btn btn-outline-success">Create Order</button>
     </div>
   </div>
