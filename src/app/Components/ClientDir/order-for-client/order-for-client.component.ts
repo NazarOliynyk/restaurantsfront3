@@ -22,18 +22,10 @@ export class OrderForClientComponent implements OnInit {
   restaurant: Restaurant;
   headersOption: HttpHeaders;
   meal: Meal = new Meal();
-  // meals: Meal[] = [];
-
-  mealsOfOrder: Meal[] = [];
-  // mealsToBeAdded: Meal[] = [];
+   mealsOfOrder: Meal[] = [];
   order: OrderMeal = new OrderMeal();
   orders: OrderMeal[] = [];
-
-  showMeals = false;
-  showPreliminaryMenu = false;
-  // ids: number[] = [];
   showOrderList = false;
-  // responseOnAction = '';
   showMealsOfOrder = false;
   reasonOfCancelationInput = false;
   reasonOfCancelation = '';
@@ -41,10 +33,7 @@ export class OrderForClientComponent implements OnInit {
   responsePositiveInput = false;
   responseNegativeInput = false;
   responseNegativeString = '';
-  // responseCreateOrder = '';
-  // showAvatars = false;
-  // showMenuSections = false;
-  // showMealsOfMenuSection = false;
+
 
   constructor(private activatedRoute: ActivatedRoute,
               private mainControllerService: MainControllerService,
@@ -53,29 +42,20 @@ export class OrderForClientComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+
     this.activatedRoute.queryParams.subscribe((data: Client) => {
       this.client = data;
       this.headersOption =
         new HttpHeaders({Authorization: localStorage.getItem('_token')});
+      this.watchAllOrders();
       this.mainControllerService.getRestaurants(this.headersOption).
       subscribe(restaurants => {this.restaurants = restaurants; });
 
     });
   }
 
-  backToAccount() {
-    this.router.navigate(['client'], {queryParams: this.client});
-  }
-
   watchAllOrders() {
-    this.showOrderList = true;
-    this.showPreliminaryMenu = false;
-    this.showRestaurantList = false;
-    this.showMeals = false;
-    this.showMealsOfOrder = false;
-    this.reasonOfCancelationInput = false;
-    this.responsePositiveInput = false;
-    this.responseNegativeInput = false;
+
     this.mainControllerService.getClientOrders(this.client.id, this.headersOption).
     subscribe(orders => {this.orders = orders; });
   }
@@ -91,19 +71,23 @@ export class OrderForClientComponent implements OnInit {
 
   deleteOrder(o: OrderMeal) {
     this.clientControllerService.deleteOrder(o.id, this.headersOption).
-    subscribe(data => {alert( data.text); },
+    subscribe(data => {alert( data.text);
+                       this.watchAllOrders(); },
       error1 => {alert('Failed to delete'); });
   }
 
   cancelOrder(o: OrderMeal) {
     this.order = o;
     this.reasonOfCancelationInput = true;
+    this.responseNegativeInput = false;
+    this.responsePositiveInput = false;
   }
 
   cancellTotally(reasonOfCancelationForm: HTMLFormElement) {
     this.clientControllerService.cancelOrderByClient(
       this.order.id, this.reasonOfCancelation, this.headersOption).
     subscribe(cancelation => {alert( cancelation.text);
+                              this.watchAllOrders();
                               this.reasonOfCancelationInput = false; },
       error1 => alert( 'ERROR: Failed to change status'));
   }
@@ -112,7 +96,8 @@ export class OrderForClientComponent implements OnInit {
     this.order = o;
     console.log(this.order);
     this.clientControllerService.confirmOrderServed(this.order.id, 'Posted to served', this.headersOption).
-    subscribe(value => {alert( value.text); },
+    subscribe(value => {alert( value.text);
+                        this.watchAllOrders(); },
       error1 => alert('ERROR: Failed to change status'));
   }
 
@@ -120,12 +105,15 @@ export class OrderForClientComponent implements OnInit {
   positiveResponse(o: OrderMeal) {
     this.order = o;
     this.responsePositiveInput = true;
+    this.reasonOfCancelationInput = false;
+    this.responseNegativeInput = false;
   }
 
   makePositiveResponse(responsePositiveForm: HTMLFormElement) {
     this.clientControllerService.positiveFromClient(
       this.order.id, this.responsePositiveString, this.headersOption).
     subscribe(res => {alert( res.text);
+                      this.watchAllOrders();
                       this.responsePositiveInput = false; },
       error1 => alert( 'ERROR: Failed to change status'));
   }
@@ -133,14 +121,32 @@ export class OrderForClientComponent implements OnInit {
   negativeResponse(o: OrderMeal) {
     this.order = o;
     this.responseNegativeInput = true;
+    this.reasonOfCancelationInput = false;
+    this.responsePositiveInput = false;
   }
 
   makeNegativeResponse(responseNegativeForm: HTMLFormElement) {
     this.clientControllerService.negativeFromClient(
       this.order.id, this.responseNegativeString, this.headersOption).
     subscribe(res => {alert( res.text);
+                      this.watchAllOrders();
                       this.responseNegativeInput = false; },
       error1 => alert( 'ERROR: Failed to change status'));
   }
 
+  closeReasonOfCancelation() {
+    this.reasonOfCancelationInput = false;
+  }
+
+  closeResponsePositive() {
+    this.responsePositiveInput = false;
+  }
+
+  closeResponseNegative() {
+    this.responseNegativeInput = false;
+  }
+
+  closeShowMeals() {
+    this.showMealsOfOrder = false;
+  }
 }

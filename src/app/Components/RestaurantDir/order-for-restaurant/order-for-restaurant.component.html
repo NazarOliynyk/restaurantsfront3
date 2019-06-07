@@ -1,6 +1,11 @@
 
+
+
 <form class="inputForm" *ngIf="reasonOfCancelationInput" #responsePositiveForm>
-  Comment cancellation of order from: {{order.date| date}}<br>
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeShowCAncelation()">
+    <span aria-hidden="true">&times;</span></button>
+  Comment <b>cancellation</b> of order from: {{order.date| date}}<br>
   <textarea [(ngModel)]="reasonOfCancelation"
             name="responseString"
             type="text" placeholder="responseString"
@@ -9,7 +14,10 @@
 </form>
 
 <form class="inputForm" *ngIf="responsePositiveInput" #responsePositiveForm>
-  Comment positive response of order from: {{order.date| date}}<br>
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeResponsePositive()">
+    <span aria-hidden="true">&times;</span></button>
+  Comment <b>positive response</b> of order from: {{order.date| date}}<br>
   <textarea [(ngModel)]="responsePositiveString"
             name="responseString"
             type="text" placeholder="responseString"
@@ -18,7 +26,10 @@
 </form>
 
 <form class="inputForm" *ngIf="responseNegativeInput" #responsePositiveForm>
-  Comment negative response of order from: {{order.date| date}}<br>
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeResponseNegative()">
+    <span aria-hidden="true">&times;</span></button>
+  Comment <b>negative response</b> of order from: {{order.date| date}}<br>
   <textarea [(ngModel)]="responseNegativeString"
             name="responseString"
             type="text" placeholder="responseString"
@@ -27,31 +38,24 @@
 </form>
 
 
-
-<!--<div *ngIf="showClientInfo" class="clientInfo">-->
-  <!--NAME: <div>{{client.username}}</div><br>-->
-  <!--EMAIL: <div>{{client.email}}</div><br>-->
-  <!--POSITIVE RATING: <div style="color: green">{{client.clientPositiveResponses}}</div><br>-->
-  <!--NEGATIVE RATING: <div style="color: red">{{client.clientNegativeResponses}}</div><br>-->
-  <!--<button (click)="showResponses(restaurant, client)">Show Responses</button>-->
-<!--</div>-->
-
 <div *ngIf="showMealsOfOrder" class="mealsOfOrder">
-
-    <h3>Info about current order: </h3>
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeMealsOfOrder()">
+    <span aria-hidden="true">&times;</span></button>
+    <h5>Info about current order: </h5>
     DATE: {{order.date | date:'medium'}} <br>
     CLIENT: {{order.client.username}} <br>
-    INFORMATION: {{order.orderStatus}} <br>
-    <!--<button (click)="getInfoAboutClient(order)">GET Info About CLIENT</button>-->
+    STATUS: {{order.orderStatus}} <br>
     <button (click)="acceptToKitchen(order)">Accept to kitchen </button>
     <button (click)="deleteOrder(order)">Delete Order</button>
     <button (click)="cancelOrder(order)">Cancel</button>
     <button (click)="positiveResponse(order)">Positive Response </button>
     <button (click)="negativeResponse(order)">Negative Response </button>
-    <h5>The list of meals of order by client: {{order.client.name}}</h5>
+    <h5>The list of meals of order by client: {{order.client.username}}</h5>
     <table class="table table-hover" >
       <tr>
         <th >IMAGE</th>
+        <th >SECTION OF MENU</th>
         <th >NAME</th>
         <th >DESCRIPTION</th>
         <th >QUANTITY</th>
@@ -59,6 +63,7 @@
       </tr>
       <tr *ngFor="let m of mealsOfOrder">
         <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
+        <td>{{m.menuSection.name}}</td>
         <td>{{m.name}}</td>
         <td>{{m.description}}</td>
         <td>{{m.quantity}}</td>
@@ -78,11 +83,10 @@
       DATE: {{o.date | date:'medium'}} <br>
       CLIENT: {{o.client.username}} <br>
       STATUS: {{o.orderStatus}} <br>
-      RESPONSES of Client
-        <button (click)="showResponses(o.restaurant, o.client)" class="btn-outline-success btn-sm">
-          {{o.client.clientPositiveResponses}}</button>
-        <button (click)="showResponses(o.restaurant, o.client)" class="btn-outline-danger btn-sm">
-          {{o.client.clientNegativeResponses}}</button><br>
+      RESPONSES positive/negative:
+        <button (click)="showResponses(o.restaurant, o.client)" class="btn-outline-light btn-sm">
+          <b style="color:green">{{o.client.clientPositiveResponses}}</b> /
+          <b style="color: red">{{o.client.clientNegativeResponses}}</b></button>
       <button (click)="getOrderMeals(o)">Get Details of Order</button>
     </div><br>
   </div>

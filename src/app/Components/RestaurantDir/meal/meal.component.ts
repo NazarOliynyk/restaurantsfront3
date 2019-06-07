@@ -12,6 +12,7 @@ import {RestaurantControllerService} from '../../../controllerServices/restauran
   templateUrl: './meal.component.html',
   styleUrls: ['./meal.component.css']
 })
+
 export class MealComponent implements OnInit {
 
   restaurant: Restaurant = new Restaurant();
@@ -21,6 +22,7 @@ export class MealComponent implements OnInit {
 
   meal: Meal = new Meal();
   meals: Meal [] = [];
+  mealsToShow: Meal [] = [];
   showListOfMeals = false;
   showUpdateForm = false;
   mealToUpdate: Meal = new Meal();
@@ -29,6 +31,7 @@ export class MealComponent implements OnInit {
   name = '';
   showAvtarForm = false;
   imageToLoad: File = null;
+
 
   constructor(private activatedRoute: ActivatedRoute,
               private mainControllerService: MainControllerService,
@@ -40,10 +43,18 @@ export class MealComponent implements OnInit {
       this.restaurant = data;
       this.headersOption =
         new HttpHeaders({Authorization: localStorage.getItem('_token')});
+
       this.mainControllerService.getMenuSections(this.restaurant, this.headersOption).
       subscribe(menuSections  => this.menuSections = menuSections);
     });
+    this.getAllMeals();
+  }
 
+  getAllMeals() {
+    this.mainControllerService.getMeals(this.restaurant.id, this.headersOption).
+    subscribe(data => {
+      this.meals = data;
+    });
   }
 
   showAddForm() {
@@ -53,17 +64,27 @@ export class MealComponent implements OnInit {
     this.showAvtarForm = false;
   }
 
-  getListOfMeals(restaurant: Restaurant) {
+  optMenuSection(ms: MenuSection) {
+    this.menuSection = ms;
+    this.showFormAddMeal = false;
+    this.showUpdateForm = false;
+    this.showAvtarForm = false;
+    this.mealsToShow = [];
+    for (const m of this.meals) {
+      if (m.menuSection.name === this.menuSection.name) {
+        this.mealsToShow.push(m);
+      }
+    }
+    this.showListOfMeals = true;
+  }
+
+  getListOfMeals() {
     this.showFormAddMeal = false;
     this.showListOfMeals = true;
     this.showUpdateForm = false;
     this.showAvtarForm = false;
-    this.restaurant = restaurant;
-    this.mainControllerService.getMeals(this.restaurant.id, this.headersOption).
-    subscribe(data => {
-      this.meals = data;
-      this.showListOfMeals = true;
-    });
+    this.mealsToShow = this.meals;
+    this.showListOfMeals = true;
   }
 
   showAvatarForm(m: Meal) {
@@ -84,7 +105,8 @@ export class MealComponent implements OnInit {
     this.meal.price = parseFloat(this.priceOfMeal);
     this.restaurantControllerService.saveMeal(
       this.restaurant.id, this.meal, this.headersOption).
-    subscribe(data => {alert( data.text); },
+    subscribe(data => {alert( data.text);
+                       this.getAllMeals(); },
       error1 => {alert( 'Failed to save'); });
   }
 
@@ -97,7 +119,6 @@ export class MealComponent implements OnInit {
     this.showListOfMeals = false;
     this.showUpdateForm = true;
     this.meal = meal;
-    console.log('meal to update: ' + meal);
   }
 
   delete(meal: Meal) {
@@ -105,7 +126,8 @@ export class MealComponent implements OnInit {
     console.log('meal to delete: ' + meal);
     this.restaurantControllerService.deleteMeal(this.meal.id, this.headersOption).
     subscribe(data => {alert(data.text);
-                       this.showListOfMeals = false; },
+                       this.showListOfMeals = false;
+                       this.getAllMeals(); },
       error1 => {alert( 'Failed to delete'); });
   }
 
@@ -124,12 +146,20 @@ export class MealComponent implements OnInit {
     if (this.mealToUpdate.price === 0) {
       this.mealToUpdate.price = this.meal.price; }
     this.mealToUpdate.avatar = this.meal.avatar;
+
+    // console.log(this.mealToUpdate.menuSection.name);
+    // console.log(this.mealToUpdate.name);
+    // console.log(this.mealToUpdate.description);
+    // console.log(this.mealToUpdate.price);
+    // console.log(this.mealToUpdate.quantity);
     this.restaurantControllerService.saveMeal(
       this.restaurant.id, this.mealToUpdate, this.headersOption).
     subscribe(data => {alert( data.text);
-                       this.showUpdateForm = false; },
+                       this.showUpdateForm = false;
+                       this.getAllMeals(); },
       error1 => {alert( 'Failed to update'); });
   }
+
   handleFileInput(files: FileList) {
     this.imageToLoad = files.item(0);
   }
@@ -140,7 +170,8 @@ export class MealComponent implements OnInit {
       const formData: FormData = new FormData();
       formData.append('file', this.imageToLoad);
       this.restaurantControllerService.saveAvatarToMeal(this.meal.id, formData, this.headersOption).
-      subscribe(data => {alert( data.text);  },
+      subscribe(data => {alert( data.text);
+                         this.getAllMeals(); },
         error1 => alert( 'Failed to save!'));
     }
   }
@@ -149,7 +180,25 @@ export class MealComponent implements OnInit {
   deleteAvatar() {
     console.log('DELETE AVATAR');
     this.restaurantControllerService.deleteAvatarFromMeal(this.meal.id, this.headersOption).
-    subscribe(value => {alert(value.text); },
+    subscribe(value => {alert(value.text);
+                        this.getAllMeals(); },
       error1 => alert('Failed to delete image'));
   }
+
+  closeAddMeal() {
+    this.showFormAddMeal = false;
+  }
+
+  closeUpdateMeal() {
+    this.showUpdateForm = false;
+  }
+
+  closeAvatarMeal() {
+    this.showAvtarForm = false;
+  }
+
+  closeListOfMeals() {
+    this.showListOfMeals = false;
+  }
+
 }

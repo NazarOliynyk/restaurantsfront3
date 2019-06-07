@@ -1,15 +1,28 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <nav class="navbar " style="background: rosybrown">
   <div class="container-fluid">
     <h4>Restaurant Page</h4>
-    <button (click)="showInitialData()" class="btn btn-primary">Show my Data</button><br>
-    <button (click)="showUpdate()" class="btn btn-primary">Update my Data</button><br>
-    <button (click)="changePasswordForm()" class="btn btn-primary">Change Password</button><br>
+    <!--<button (click)="showInitialData()" class="btn btn-primary">Show my Data</button><br>-->
+    <!--<button (click)="showUpdate()" class="btn btn-primary">Update my Data</button><br>-->
+    <!--<button (click)="changePasswordForm()" class="btn btn-primary">Change Password</button><br>-->
     <button (click)="goToMenuSections()" class="btn btn-primary">My sections of Menu</button><br>
     <button (click)="goToMeals()" class="btn btn-primary">My meals</button><br>
     <button (click)="goToOrders()" class="btn btn-primary">My orders</button><br>
-    <button (click)="deleteAccount()" class="btn btn-danger">Delete Account</button><br>
+    <!--<button (click)="deleteAccount()" class="btn btn-danger">Delete Account</button><br>-->
+    <div class="w3-container">
+      <div class="w3-dropdown-hover">
+        <button class="w3-button w3-black">Account Settings</button>
+        <div class="w3-dropdown-content w3-bar-block w3-border">
+          <button class="w3-bar-item w3-button" (click)="showInitialData()" >Show my Data</button><br>
+          <button class="w3-bar-item w3-button" (click)="showUpdate()" >Update my Data</button><br>
+          <button class="w3-bar-item w3-button" (click)="changePasswordForm()" >Change Password</button><br>
+          <button  class="w3-bar-item w3-button" (click)="deleteAccount()" style="color: red">Delete Account</button><br>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 

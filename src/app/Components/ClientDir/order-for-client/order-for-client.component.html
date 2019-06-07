@@ -1,10 +1,10 @@
 
-<div class="buttonBlock">
-      <button (click)="backToAccount()">Get Back to my Account</button>
-      <button (click)="watchAllOrders()">Watch all my Orders</button>
-</div>
 
 <form class="inputForm" *ngIf="reasonOfCancelationInput" #responsePositiveForm>
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeReasonOfCancelation()">
+    <span aria-hidden="true">&times;</span>
+  </button>
   Comment cancellation of order from: {{order.date| date}}<br>
   <textarea [(ngModel)]="reasonOfCancelation"
             name="responseString"
@@ -14,6 +14,10 @@
 </form>
 
 <form class="inputForm" *ngIf="responsePositiveInput" #responsePositiveForm>
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeResponsePositive()">
+    <span aria-hidden="true">&times;</span>
+  </button>
   Comment positive response of order from: {{order.date| date}}<br>
   <textarea [(ngModel)]="responsePositiveString"
             name="responseString"
@@ -23,6 +27,10 @@
 </form>
 
 <form class="inputForm" *ngIf="responseNegativeInput" #responsePositiveForm>
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeResponseNegative()">
+    <span aria-hidden="true">&times;</span>
+  </button>
   Comment negative response of order from: {{order.date| date}}<br>
   <textarea [(ngModel)]="responseNegativeString"
             name="responseString"
@@ -33,6 +41,10 @@
 
 
 <form *ngIf="showMealsOfOrder" class="tableClass">
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeShowMeals()">
+    <span aria-hidden="true">&times;</span>
+  </button>
   <h5>The list of meals of order: {{order.date | date: 'yyyy-MM-dd'}} in {{order.restaurant.name}}</h5>
   <table class="table table-hover" >
     <tr>
@@ -54,7 +66,7 @@
 </form>
 
 
-<form *ngIf="showOrderList">
+<form >
 
   <div class="flex-container-5" >
 

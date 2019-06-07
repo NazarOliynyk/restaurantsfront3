@@ -10,8 +10,7 @@
         <th >EMAIL</th>
         <th >PHONE NUMBER</th>
         <th >ADDITIONAL INFO</th>
-        <th >POSITIVE RESP</th>
-        <th >NEGATIVE RESP</th>
+        <th >RESPONSES (posit./negat.)</th>
         <th >ACTIONS</th>
       </tr>
       <tr *ngFor="let r of restaurants">
@@ -22,11 +21,9 @@
         <td>{{r.phoneNumber}}</td>
         <td>{{r.additionalInfo}}</td>
         <td >
-          <button (click)="goToResponses(r)" class="btn-outline-success btn-sm">
-            {{r.restaurantPositiveResponses}}</button></td>
-        <td >
-          <button (click)="goToResponses(r)" class="btn-outline-danger btn-sm">
-            {{r.restaurantNegativeResponses}}</button></td>
+          <button (click)="goToResponses(r)" class="btn-outline-light btn-sm">
+            <b style="color:green">{{r.restaurantPositiveResponses}}</b> /
+            <b style="color: red">{{r.restaurantNegativeResponses}}</b></button></td>
         <td> <button (click)="goToThisRestaurant(r)" class="btn btn-primary btn-sm" >Visit</button></td>
       </tr>
     </table>
@@ -37,6 +34,7 @@
 
   <div class="p-2 border" style="background: darksalmon">
     <h4>Sections of Menu:</h4>
+    <h5>Restaurant: {{restaurant.name}}</h5>
     <div>
       <div *ngFor="let ms of menuSections" class="msField">
         <br><button (click)="goToMenuSection(ms)" class="btn btn-outline-primary btn-lg">{{ms.name}}</button>
@@ -46,43 +44,47 @@
 
   <div class="p-2 border flex-grow-1" style="background: goldenrod">
    <button (click)="backToRestaurants()">Back to Restaurant list</button>
-    <h4>The list of Meals of {{menuSection.name}}</h4>
+    <b>The list of Meals of Section: {{menuSection.name}}</b>
 
     <table class="table table-hover"  >
       <tr>
         <th >IMAGE</th>
         <th >NAME</th>
-        <th >DESCRIPTION</th>
+        <th style="width: fit-content">DESCRIPTION</th>
         <th >QUANTITY</th>
         <th >PRICE UAH</th>
         <th >EUR</th>
         <th >USD</th>
         <th >PLN</th>
-        <th >ACTIONS</th>
       </tr>
       <tr *ngFor="let m of mealsOfMS">
         <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
-        <td>{{m.name}}</td>
+        <td>
+          <button
+            (click)="addMeal(m)" class="btn btn-outline-success btn-sm">
+            {{m.name}}</button></td>
         <td>{{m.description}}</td>
         <td>{{m.quantity}}</td>
         <td>{{m.price}}</td>
         <td>{{m.price*eur | number: '1.2-2'}}</td>
         <td>{{m.price*usd | number: '1.2-2'}}</td>
         <td>{{m.price*pln | number: '1.2-2'}}</td>
-        <td>
-          <button (click)="addMeal(m)" class="btn btn-outline-primary btn-sm">ADD</button></td>
+
       </tr>
     </table>
   </div>
   <div class="p-2 border" style="background: tan">
-    <h4>Preliminary Menu:</h4>
+    <h4>PRELIMINARY LOOK of MENU:</h4>
     <div *ngIf="showPreliminaryMenu">
       <div *ngFor="let m of mealsToBeAdded" class="msField">
-        <img [src]="'assets/images/'+m.avatar" alt=""><br>
-        {{m.name}}
-        <br><button (click)="removeFromPreliminaryMenu(m)" class="btn btn-outline-primary btn-sm">Remove</button>
+        <div style="margin: 5px"><img [src]="'assets/images/'+m.avatar" alt=""></div>
+        <div>
+          {{m.menuSection.name}},<br>
+          {{m.name}},<br>
+          {{m.price}} UAH</div>
+        <br><button (click)="removeFromPreliminaryMenu(m)" class="btn btn-outline-danger btn-sm">Remove</button>
       </div>
-      <div>TOTAL: {{total | number: '1.2-2' }} UAH</div>
+      <div class="font-weight-bold">TOTAL: {{total | number: '1.2-2' }} UAH</div>
       <button (click)="createOrder()" class="btn btn-outline-success">Create Order</button>
     </div>
   </div>

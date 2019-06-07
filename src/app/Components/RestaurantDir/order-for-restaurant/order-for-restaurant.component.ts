@@ -20,7 +20,6 @@ export class OrderForRestaurantComponent implements OnInit {
 
   restaurant: Restaurant = new Restaurant();
   client: Client = new Client();
-  showRestaurantList = true;
   headersOption: HttpHeaders;
   meal: Meal = new Meal();
   mealsOfOrder: Meal[] = [];
@@ -34,7 +33,6 @@ export class OrderForRestaurantComponent implements OnInit {
   responsePositiveInput = false;
   responseNegativeInput = false;
   responseNegativeString = '';
-  // showClientInfo = false;
   routerTruck: RouterTruck;
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -49,37 +47,35 @@ export class OrderForRestaurantComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((data: Restaurant) => {
       this.restaurant = data;
     });
+    this.getOrders();
+  }
+
+  getOrders() {
     this.mainControllerService.getRestaurantOrders(this.restaurant.id, this.headersOption).
     subscribe(orders => {this.orders = orders; });
   }
 
-
   getOrderMeals(o: OrderMeal) {
     this.order = o;
     this.showMealsOfOrder = true;
-    this.showRestaurantList = false;
-    // this.showOrderList = false;
     this.clientControllerService.getMealsOfOrder(o.id, this.headersOption).
     subscribe(mealsList => {this.mealsOfOrder = mealsList; } );
   }
 
-  // getInfoAboutClient(order: OrderMeal) {
-  //   this.showClientInfo = true;
-  //   this.restaurantControllerService.findClientByOrderId(order.id, this.headersOption).
-  //   subscribe(client => {this.client = client; });
-  // }
 
   acceptToKitchen(order: OrderMeal) {
     console.log(order.id);
     this.restaurantControllerService.acceptOrderToKitchen(order, this.headersOption).
-    subscribe(res => {alert(res.text); },
+    subscribe(res => {alert(res.text);
+                      this.getOrders(); },
       error1 => {alert('Failed to accept order to kitchen'); });
   }
 
   deleteOrder(order: OrderMeal) {
     this.restaurantControllerService.deleteOrderByRestaurant(
       order.id, this.headersOption).
-    subscribe(res => {alert( res.text); },
+    subscribe(res => {alert( res.text);
+                      this.getOrders(); },
       error1 => alert('Failed to delete'));
   }
 
@@ -93,7 +89,8 @@ export class OrderForRestaurantComponent implements OnInit {
   cancellTotally(reasonOfCancelationForm: HTMLFormElement) {
     this.restaurantControllerService.cancelOrderByRestaurant(
       this.order.id, this.reasonOfCancelation, this.headersOption).
-    subscribe(res => {alert( res.text); },
+    subscribe(res => {alert( res.text);
+                      this.getOrders(); },
       error1 => alert( 'ERROR: Failed to cancel order') );
   }
 
@@ -107,7 +104,8 @@ export class OrderForRestaurantComponent implements OnInit {
   makePositiveResponse(responsePositiveForm: HTMLFormElement) {
     this.restaurantControllerService.positiveFromRestaurant(
       this.order.id, this.responsePositiveString, this.headersOption).
-    subscribe(res => {alert( res.text); },
+    subscribe(res => {alert( res.text);
+                      this.getOrders(); },
       error1 => alert( 'ERROR: Failed to change status'));
   }
 
@@ -121,7 +119,8 @@ export class OrderForRestaurantComponent implements OnInit {
   makeNegativeResponse(responseNegativeForm: HTMLFormElement) {
     this.restaurantControllerService.negativeFromRestaurant(
       this.order.id, this.responseNegativeString, this.headersOption).
-    subscribe(res => {alert( res.text); },
+    subscribe(res => {alert( res.text);
+                      this.getOrders(); },
       error1 => alert( 'ERROR: Failed to change status'));
   }
 
@@ -131,5 +130,21 @@ export class OrderForRestaurantComponent implements OnInit {
     this.routerTruck = new RouterTruck(this.restaurant.id, this.client.id, 'restaurant');
 
     this.router.navigate(['responses'], {queryParams: this.routerTruck});
+  }
+
+  closeShowCAncelation() {
+    this.reasonOfCancelationInput = false;
+  }
+
+  closeResponsePositive() {
+    this.responsePositiveInput = false;
+  }
+
+  closeResponseNegative() {
+    this.responseNegativeInput = false;
+  }
+
+  closeMealsOfOrder() {
+    this.showMealsOfOrder = false;
   }
 }

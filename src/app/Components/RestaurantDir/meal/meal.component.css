@@ -2,6 +2,14 @@ button{
   margin: 10px;
 }
 
+.buttonBlock{
+  background: grey;
+  width: 580px;
+  margin: 20px;
+  padding: 10px;
+  border: 2px solid yellow;
+  border-radius: 3px;
+}
 .addForm{
   background: khaki;
   border: 2px solid black;
@@ -19,13 +27,16 @@ button{
 }
 
 .updateForm{
+  padding: 10px;
+  width: 55%;
   background: rosybrown;
   border: 2px solid black;
+  border-radius: 3px;
   margin: 10px;
 }
 img{
-  width: 70px;
-  height: 70px;
+  width: 45px;
+  height: 45px;
   border-radius: 15px;
 }
 

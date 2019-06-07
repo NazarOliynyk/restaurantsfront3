@@ -1,8 +1,30 @@
-<button (click)="showAddForm()" class="btn-outline-dark">Add a meal</button>
-<button (click)="getListOfMeals(restaurant)" class="btn-outline-dark">Show All my Meals</button><br>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+
+<div class="buttonBlock">
+
+  <button (click)="showAddForm()" class="btn-outline-dark">Add a meal</button>
+  <button (click)="getListOfMeals()" class="btn-outline-dark">Show All my Meals</button>
+
+      <div class="w3-dropdown-hover">
+        <button class="btn-outline-dark">Show meals of Section</button>
+        <div class="w3-dropdown-content w3-bar-block w3-border">
+          <div *ngFor="let ms of menuSections">
+            <button class="btn btn-outline-success"
+                    (click)="optMenuSection(ms)">
+              {{ms.name}}</button></div>
+        </div>
+
+    </div>
+</div>
 
 <div *ngIf="showFormAddMeal" class="addForm">
-
+  <button type="button" class="close" aria-label="Close"
+  (click)="closeAddMeal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
   <h5>Add a new Meal to the menu of your Restaurant:</h5><br>
 
   <label >SECTION of MENU:
@@ -11,7 +33,7 @@
       </option>
     </select></label>
 
-  <form *ngIf="showFormAddMeal"  #mealForm="ngForm">
+  <form   #mealForm="ngForm">
 
     <label>NAME of MEAL:
       <input  [(ngModel)]="meal.name" type="text" class="form-control"
@@ -51,39 +73,14 @@
             (click)="saveMeal(mealForm)">Save Meal</button>
 
   </form>
+
 </div>
 
-
-<form *ngIf="showListOfMeals" class="tableStyle">
-
-  <h4>The list of Meals </h4>
-
-  <table class="table table-hover"  >
-    <tr>
-      <th>SECTION of MENU</th>
-      <th>NAME</th>
-      <th>DESCRIPTION</th>
-      <th>QUANTITY</th>
-      <th>PRICE</th>
-      <th>IMAGE</th>
-      <th>ACTIONS</th>
-    </tr>
-    <tr *ngFor="let m of meals">
-      <td>{{m.menuSection.name}}</td>
-      <td>{{m.name}}</td>
-      <td>{{m.description}}</td>
-      <td>{{m.quantity}}</td>
-      <td>{{m.price}}</td>
-      <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
-      <td> <button (click)="update(m)" >UPDATE</button>
-        <button (click)="showAvatarForm(m)">Add or update an image</button>
-        <button (click)="delete(m)" >DELETE</button></td>
-    </tr>
-  </table>
-</form>
-
 <div *ngIf="showUpdateForm" class="updateForm">
-
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeUpdateMeal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
   <p>Update a meal:</p>
   <label >Menu Section:
     <select type="text" [(ngModel)]="menuSection.name" (change)="selected(name)">
@@ -96,9 +93,11 @@
       <input [ngModel]="meal.name" [(ngModel)]="mealToUpdate.name" type="text"
              name="name" placeholder="name">
     </label><br>
-    <label>Description:
-      <input [ngModel]="meal.description" [(ngModel)]="mealToUpdate.description" type="text"
-             name="description" placeholder="description">
+    <label>Description:<br>
+      <textarea  [ngModel]="meal.description" [(ngModel)]="mealToUpdate.description" type="text"
+                 name="description" placeholder="description" style="width: 200px" rows="5"></textarea>
+      <!--<input [ngModel]="meal.description" [(ngModel)]="mealToUpdate.description" type="text"-->
+             <!--name="description" placeholder="description">-->
     </label><br>
     <label>Quantity:
       <input [ngModel]="meal.quantity" [(ngModel)]="mealToUpdate.quantity" type="text"
@@ -114,7 +113,10 @@
 </div>
 
 <form *ngIf="showAvtarForm" #avatarForm class="updateImage">
-
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeAvatarMeal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
   <label>Add a new image to your Restaurant portfolio:<br>
     <input type="file"  (change)="handleFileInput($event.target.files)"></label>
 
@@ -124,3 +126,39 @@
   <div ><img [src]="'assets/images/'+meal.avatar" alt=""></div>
   <button  (click)="deleteAvatar()">Delete Image</button><br>
 </form>
+
+
+
+<form *ngIf="showListOfMeals" class="tableStyle">
+  <button type="button" class="close" aria-label="Close"
+          (click)="closeListOfMeals()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4>The list of Meals </h4>
+
+  <table class="table table-hover"  >
+    <tr>
+      <th>SECTION of MENU</th>
+      <th>NAME</th>
+      <th>DESCRIPTION</th>
+      <th>QUANTITY</th>
+      <th>PRICE</th>
+      <th>IMAGE</th>
+      <th>ACTIONS</th>
+    </tr>
+    <tr *ngFor="let m of mealsToShow">
+      <td>{{m.menuSection.name}}</td>
+      <td>{{m.name}}</td>
+      <td>{{m.description}}</td>
+      <td>{{m.quantity}}</td>
+      <td>{{m.price}}</td>
+      <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
+      <td>
+        <button class="btn btn-outline-success btn-sm" (click)="update(m)" >UPDATE</button>
+        <button class="btn btn-outline-success btn-sm" (click)="showAvatarForm(m)">Add or update an image</button>
+        <button class="btn btn-outline-danger btn-sm" (click)="delete(m)" >DELETE</button>
+      </td>
+    </tr>
+  </table>
+</form>
+

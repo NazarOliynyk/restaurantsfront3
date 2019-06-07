@@ -59,7 +59,6 @@ export class ResponsesComponent implements OnInit {
         subscribe(orders => {this.orders = orders; });
       }
 
-
     });
   }
 

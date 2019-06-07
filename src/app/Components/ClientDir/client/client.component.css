@@ -9,6 +9,15 @@ th, td{
   border-collapse: collapse;
 }
 
+.updateForm{
+  background: orange;
+  width: 270px;
+  margin: 20px;
+  padding: 10px;
+  border: 2px solid yellow;
+  border-radius: 3px;
+}
+
 .changePasForm{
   width: 250px;
   border: 3px solid orange;
@@ -17,3 +26,7 @@ th, td{
   margin-left: 150px;
   padding: 15px;
 }
+
+/*dropdown*/
+
+

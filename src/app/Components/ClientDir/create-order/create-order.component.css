@@ -2,8 +2,8 @@ button{
   margin: 10px;
 }
 img{
-  width: 70px;
-  height: 70px;
+  width: 55px;
+  height: 55px;
   border-radius: 15px;
 }
 .tableStyle {
@@ -16,6 +16,8 @@ img{
 .msField{
   border: 1px solid whitesmoke;
   border-radius: 2px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 th{

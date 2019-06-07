@@ -7,8 +7,8 @@ img{
   height: 35px;
   border-radius: 5px;
 }
-.buttonBlock{
-  width: 350px;
+.buttonBlock1{
+  width: 400px;
   background: tan;
   border-radius: 2px;
   border: 2px solid yellow;
@@ -16,7 +16,7 @@ img{
 }
 
 .flex-container1-div{
-  background-color: rosybrown;
+  background-color: peachpuff;
   border: 2px solid orange;
   border-radius: 3px;
   width: 300px;
@@ -26,15 +26,15 @@ img{
   line-height: 20px;
   font-size: 12px
 }
-.flex-container1-div-small{
-  background-color: rosybrown;
-  width: 200px;
-  height: 50px;
-  margin: 10px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 12px
-}
+/*.flex-container1-div-small{*/
+  /*background-color: peachpuff;*/
+  /*width: 200px;*/
+  /*height: 50px;*/
+  /*margin: 10px;*/
+  /*text-align: center;*/
+  /*line-height: 20px;*/
+  /*font-size: 12px*/
+/*}*/
 .flex-container-5 {
   display: flex;
   flex-wrap: wrap;
@@ -56,8 +56,8 @@ img{
   border: 1px solid darkblue;
 }
 .inputForm{
-  width: 400px;
-  height: 160px;
+  width: 500px;
+  height: 185px;
   background: chartreuse;
   border: 1px solid crimson;
   border-radius: 2px;
