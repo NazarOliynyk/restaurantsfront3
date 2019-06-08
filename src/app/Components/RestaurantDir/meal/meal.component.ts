@@ -100,11 +100,11 @@ export class MealComponent implements OnInit {
     if (this.menuSection.name === '') {
       this.menuSection.name = this.menuSections[0].name;
     }
-    this.meal.menuSection = this.menuSection;
+    // this.meal.menuSection = this.menuSection;
 
     this.meal.price = parseFloat(this.priceOfMeal);
     this.restaurantControllerService.saveMeal(
-      this.restaurant.id, this.meal, this.headersOption).
+      this.menuSection.id, this.meal, this.headersOption).
     subscribe(data => {alert( data.text);
                        this.getAllMeals(); },
       error1 => {alert( 'Failed to save'); });
@@ -136,7 +136,7 @@ export class MealComponent implements OnInit {
       this.menuSection.name = this.meal.menuSection.name;
     }
     this.mealToUpdate.id = this.meal.id;
-    this.mealToUpdate.menuSection = this.menuSection;
+   // this.mealToUpdate.menuSection = this.menuSection;
     if (this.mealToUpdate.name === '') {
       this.mealToUpdate.name = this.meal.name; }
     if (this.mealToUpdate.description === '') {
@@ -153,7 +153,7 @@ export class MealComponent implements OnInit {
     // console.log(this.mealToUpdate.price);
     // console.log(this.mealToUpdate.quantity);
     this.restaurantControllerService.saveMeal(
-      this.restaurant.id, this.mealToUpdate, this.headersOption).
+      this.menuSection.id, this.mealToUpdate, this.headersOption).
     subscribe(data => {alert( data.text);
                        this.showUpdateForm = false;
                        this.getAllMeals(); },
