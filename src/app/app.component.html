@@ -1,11 +1,59 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
 <div  style="height: 1600px" [ngStyle]="{'background' : 'url(./assets/images/background.jpeg)'}">
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-    <h2 style="color: crimson">Welcome to Restaurants & Clients</h2>
+    <h4 style="color: crimson">Welcome to Restaurants & Visitors</h4>
+    <div class="w3-container">
+      <div class="w3-dropdown-hover">
+        <button class="w3-button w3-black">Info for visitors</button>
+        <div class="w3-dropdown-content w3-bar-block w3-border">
+          <div class="info">Hi! Welcome to Restaurants & Visitors.
+           <p> This project is destined to facilitate both the ability of restaurant owners to post their current menu on the internet and the ability of retaurant visitors to pick meals up from the menu and make orders.</p>
+           <p> In case you are a visitor:</p>
+            <p>- sign in, set your data and take a look into your email.
+              The letter with the special link will be sent to your address -
+              follow it to confirm your registration.</p>
+            <p>- log in either with your login or your email.</p>
+            <p>- go to "Create Order" chapter. You will get a list of restaurants.
+              Opt for a restaurant you wish to visit and take a look on its menu.
+              Choose meals from sections of menu, fill the order.
+              The preliminary look of order is depicted either, you can edit it.
+              Then post that order. The restaurant will get an email-notification about your order and send you the reply.</p>
+            <p>- enjoy your meals.
+              After finishing set the status of your order - SERVED and post a response on the order in particular and the restaurant in general.</p>
+            <p>Mind it - your responses may help other visitors make the proper decision about choosing the restaurant.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w3-container">
+      <div class="w3-dropdown-hover">
+        <button class="w3-button w3-black">Info for restaurants</button>
+        <div class="w3-dropdown-content w3-bar-block w3-border">
+          <div class="info">Hi! Welcome to Restaurants & Visitors.
+            <p> This project is destined to facilitate both the ability of restaurant owners to post their current menu on the internet and the ability of retaurant visitors to pick meals up from the menu and make orders.</p>
+            <p> In case you are a restaurant owner or manager: </p>
+            <p>- sign in, set your data and take a look into your email.
+              The letter with the special link will be sent to your address -
+              follow it to confirm your registration.</p>
+            <p>- log in either with your login or your email.</p>
+            <p>- use "Account Settings" to add an image to your account.</p>
+            <p>- use "My sections of menu" chapter to add sections to your menu.</p>
+            <p>- use "My meals" chapter to add meals to certain sections of your menu.</p>
+            <p>- as soon as someone of visitors posts an order - you will get an email-notification about it.
+              Take a look at "My orders" chapter - there will be all your orders in there.
+              You can either accept it to kitchen or cancel.</p>
+            <p>- feel free to post responses on your visitors.
+              It will help other restaurants make proper decision while accepting or canceling orders.</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <button (click)="signIn()" class="btn btn-outline-success" style="font-size: large">Sign in</button><br>
     <button (click)="logIn()" class="btn btn-outline-danger" style="font-size: large">Log in / Log out</button><br>
   </div>

@@ -50,6 +50,11 @@ export class MealComponent implements OnInit {
     this.getAllMeals();
   }
 
+//   getMenuSections() {
+//     this.mainControllerService.getMenuSections(this.restaurant, this.headersOption).
+//     subscribe(menuSections  => this.menuSections = menuSections);
+// }
+
   getAllMeals() {
     this.mainControllerService.getMeals(this.restaurant.id, this.headersOption).
     subscribe(data => {
@@ -147,11 +152,6 @@ export class MealComponent implements OnInit {
       this.mealToUpdate.price = this.meal.price; }
     this.mealToUpdate.avatar = this.meal.avatar;
 
-    // console.log(this.mealToUpdate.menuSection.name);
-    // console.log(this.mealToUpdate.name);
-    // console.log(this.mealToUpdate.description);
-    // console.log(this.mealToUpdate.price);
-    // console.log(this.mealToUpdate.quantity);
     this.restaurantControllerService.saveMeal(
       this.menuSection.id, this.mealToUpdate, this.headersOption).
     subscribe(data => {alert( data.text);

@@ -145,7 +145,7 @@ export class LoginationComponent implements OnInit {
           this.mainControllerService.forgotPassword(this.user).
           subscribe(res => {
             console.log(res.text);
-            this.responseChangePass = res.text; });
+            alert(res.text) ; });
         } else { this.responseChangePass = 'Looking for your account...'; }
       }
     });
