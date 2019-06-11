@@ -35,25 +35,22 @@ export class MealComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private mainControllerService: MainControllerService,
-              private restaurantControllerService: RestaurantControllerService,
-              private router: Router) { }
+              private restaurantControllerService: RestaurantControllerService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((data: Restaurant) => {
       this.restaurant = data;
       this.headersOption =
         new HttpHeaders({Authorization: localStorage.getItem('_token')});
-
-      this.mainControllerService.getMenuSections(this.restaurant, this.headersOption).
-      subscribe(menuSections  => this.menuSections = menuSections);
-    });
+          });
+    this.getMenuSections();
     this.getAllMeals();
   }
 
-//   getMenuSections() {
-//     this.mainControllerService.getMenuSections(this.restaurant, this.headersOption).
-//     subscribe(menuSections  => this.menuSections = menuSections);
-// }
+  getMenuSections() {
+    this.mainControllerService.getMenuSections(this.restaurant, this.headersOption).
+    subscribe(menuSections  => this.menuSections = menuSections);
+}
 
   getAllMeals() {
     this.mainControllerService.getMeals(this.restaurant.id, this.headersOption).
@@ -101,22 +98,15 @@ export class MealComponent implements OnInit {
   }
 
   saveMeal(mealForm: HTMLFormElement) {
-
     if (this.menuSection.name === '') {
       this.menuSection.name = this.menuSections[0].name;
     }
-    // this.meal.menuSection = this.menuSection;
-
     this.meal.price = parseFloat(this.priceOfMeal);
     this.restaurantControllerService.saveMeal(
       this.menuSection.id, this.meal, this.headersOption).
     subscribe(data => {alert( data.text);
                        this.getAllMeals(); },
       error1 => {alert( 'Failed to save'); });
-  }
-
-  selected(name) {
-    console.log(name);
   }
 
   update(meal: Meal) {
@@ -141,7 +131,7 @@ export class MealComponent implements OnInit {
       this.menuSection.name = this.meal.menuSection.name;
     }
     this.mealToUpdate.id = this.meal.id;
-   // this.mealToUpdate.menuSection = this.menuSection;
+
     if (this.mealToUpdate.name === '') {
       this.mealToUpdate.name = this.meal.name; }
     if (this.mealToUpdate.description === '') {

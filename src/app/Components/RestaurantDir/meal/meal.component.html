@@ -28,8 +28,8 @@
   <h5>Add a new Meal to the menu of your Restaurant:</h5><br>
 
   <label >SECTION of MENU:
-    <select type="text" [(ngModel)]="menuSection.name" (change)="selected(name)" class="form-control">
-      <option  *ngFor="let ms of menuSections" value="{{ms.name}}">{{ms.name}}
+    <select type="text" [(ngModel)]="menuSection.id"  class="form-control">
+      <option  *ngFor="let ms of menuSections" value="{{ms.id}}">{{ms.name}}
       </option>
     </select></label>
 
@@ -83,8 +83,8 @@
   </button>
   <p>Update a meal:</p>
   <label >Menu Section:
-    <select type="text" [(ngModel)]="menuSection.name" (change)="selected(name)">
-      <option  *ngFor="let ms of menuSections" value="{{ms.name}}">{{ms.name}}
+    <select type="text" [(ngModel)]="menuSection.id" >
+      <option  *ngFor="let ms of menuSections" value="{{ms.id}}">{{ms.name}}
       </option>
     </select></label><br>
   <form  #formToBeUpdated >
