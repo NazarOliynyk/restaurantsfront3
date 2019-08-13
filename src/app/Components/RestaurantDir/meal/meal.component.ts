@@ -110,6 +110,7 @@ export class MealComponent implements OnInit {
   }
 
   update(meal: Meal) {
+
     this.showFormAddMeal = false;
     this.showListOfMeals = false;
     this.showUpdateForm = true;
@@ -129,7 +130,9 @@ export class MealComponent implements OnInit {
   updateMeal(formToBeUpdated: HTMLFormElement) {
     if (this.menuSection.name === '') {
       this.menuSection.name = this.meal.menuSection.name;
+      this.menuSection.id = this.meal.menuSection.id;
     }
+
     this.mealToUpdate.id = this.meal.id;
 
     if (this.mealToUpdate.name === '') {
@@ -148,6 +151,8 @@ export class MealComponent implements OnInit {
                        this.showUpdateForm = false;
                        this.getAllMeals(); },
       error1 => {alert( 'Failed to update'); });
+    this.menuSection = new MenuSection();
+    this.mealToUpdate = new Meal();
   }
 
   handleFileInput(files: FileList) {
