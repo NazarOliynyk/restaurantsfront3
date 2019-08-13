@@ -153,6 +153,7 @@ export class MealComponent implements OnInit {
       error1 => {alert( 'Failed to update'); });
     this.menuSection = new MenuSection();
     this.mealToUpdate = new Meal();
+    this.meal = new Meal();
   }
 
   handleFileInput(files: FileList) {
