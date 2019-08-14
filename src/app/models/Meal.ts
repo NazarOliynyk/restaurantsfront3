@@ -14,7 +14,7 @@ export class Meal {
   public menuSection: MenuSection;
   public restaurant: Restaurant = new Restaurant();
   public orders: OrderMeal [] = [];
-  public avatar = '';
+  public avatar = 'DefaultMeal.jpg';
 
 
   constructor() {

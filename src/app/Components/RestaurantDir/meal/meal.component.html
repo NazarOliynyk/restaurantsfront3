@@ -121,7 +121,8 @@
   <button  (click)="saveAvatar(avatarForm)">Save image</button><br>
 
   <label>Or Delete Existed:<br></label>
-  <div ><img [src]="'assets/images/'+meal.avatar" alt=""></div>
+  <!--<div ><img [src]="'assets/images/'+meal.avatar" alt=""></div>-->
+  <div ><img [src]="'/ava/'+meal.avatar" alt=""></div>
   <button  (click)="deleteAvatar()">Delete Image</button><br>
 </form>
 
@@ -150,7 +151,8 @@
       <td>{{m.description}}</td>
       <td>{{m.quantity}}</td>
       <td>{{m.price}}</td>
-      <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
+      <!--<td><img [src]="'assets/images/'+m.avatar" alt=""></td>-->
+      <td><img [src]="'/ava/'+m.avatar" alt=""></td>
       <td>
         <button class="btn btn-outline-success btn-sm" (click)="update(m)" >UPDATE</button>
         <button class="btn btn-outline-success btn-sm" (click)="showAvatarForm(m)">Add or update an image</button>

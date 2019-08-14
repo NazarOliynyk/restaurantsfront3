@@ -15,7 +15,7 @@ export class Restaurant extends User {
     public email = '';
     public phoneNumber = '';
     public additionalInfo = '';
-    public avatar = '';
+    public avatar = 'DefaultRestaurant.png';
     public restaurantPositiveResponses = 0;
     public restaurantNegativeResponses = 0;
     public menuSections: MenuSection [] = [];

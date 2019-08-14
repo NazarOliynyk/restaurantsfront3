@@ -55,7 +55,8 @@
       <th >PRICE UAH</th>
     </tr>
     <tr *ngFor="let m of mealsOfOrder">
-      <td><img [src]="'assets/images/'+m.avatar" alt=""></td>
+      <!--<td><img [src]="'assets/images/'+m.avatar" alt=""></td>-->
+      <td><img [src]="'ava/'+m.avatar" alt=""></td>
       <td>{{m.name}}</td>
       <td>{{m.description}}</td>
       <td>{{m.quantity}}</td>
