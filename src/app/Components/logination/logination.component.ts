@@ -136,7 +136,7 @@ export class LoginationComponent implements OnInit {
 
   sendRequestNewPass(emailToRestorePass: string) {
     this.showForgotPasswordForm = false;
-    console.log(this.emailToRestorePass);
+
     this.mainControllerService.getLogins().
     subscribe(loginsList => {
       for (const u of loginsList) {
@@ -146,7 +146,8 @@ export class LoginationComponent implements OnInit {
           subscribe(res => {
             console.log(res.text);
             alert(res.text) ; });
-        } else { this.responseChangePass = 'Looking for your account...'; }
+          this.responseChangePass = 'Account matches';
+        } else { this.responseChangePass = 'Email does not match to any account!'; }
       }
     });
   }
