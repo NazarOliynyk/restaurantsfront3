@@ -2,3 +2,15 @@
   width: 580px;
   font-family: "Simplified Arabic";
 }
+
+.bg{
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  min-height: 800px;
+  border-bottom: 3px solid black;
+  padding-bottom: 20px;
+}
+
