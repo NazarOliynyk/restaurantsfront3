@@ -5,13 +5,11 @@
 <nav class="navbar " style="background: rosybrown">
   <div class="container-fluid">
     <h4>Restaurant Page</h4>
-    <!--<button (click)="showInitialData()" class="btn btn-primary">Show my Data</button><br>-->
-    <!--<button (click)="showUpdate()" class="btn btn-primary">Update my Data</button><br>-->
-    <!--<button (click)="changePasswordForm()" class="btn btn-primary">Change Password</button><br>-->
+
     <button (click)="goToMenuSections()" class="btn btn-primary">My sections of Menu</button><br>
     <button (click)="goToMeals()" class="btn btn-primary">My meals</button><br>
     <button (click)="goToOrders()" class="btn btn-primary">My orders</button><br>
-    <!--<button (click)="deleteAccount()" class="btn btn-danger">Delete Account</button><br>-->
+
     <div class="w3-container">
       <div class="w3-dropdown-hover">
         <button class="w3-button w3-black">Account Settings</button>
@@ -54,7 +52,7 @@
   <tr >
     <th>Image</th>
     <!--<td *ngIf="showImage"><img [src]="'assets/images/'+restaurant.avatar" alt=""></td>-->
-    <td *ngIf="showImage"><img [src]="'/ava/'+restaurant.avatar" alt=""></td>
+    <td *ngIf="showImage"><img [src]="'ava/'+restaurant.avatar" alt=""></td>
   </tr>
 
 </table>
@@ -111,10 +109,10 @@
 
       <button  (click)="saveAvatar(avatarForm)">Save image</button><br>
 
-      <label>Or Delete Existed:<br></label>
+      <label>Existed image:<br></label>
       <!--<div *ngIf="showImage"><img [src]="'assets/images/'+restaurant.avatar" alt=""></div>-->
-      <div *ngIf="showImage"><img [src]="'/ava/'+restaurant.avatar" alt=""></div>
-      <button  (click)="deleteAvatar()">Delete Image</button><br>
+      <div *ngIf="showImage"><img [src]="'ava/'+restaurant.avatar" alt=""></div>
+      <!--<button  (click)="deleteAvatar()">Delete Image</button><br>-->
     </form>
   </div>
 </div>

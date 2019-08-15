@@ -115,15 +115,15 @@
           (click)="closeAvatarMeal()">
     <span aria-hidden="true">&times;</span>
   </button>
-  <label>Add a new image to your Restaurant portfolio:<br>
+  <label>Add a new image to your {{meal.name}}:<br>
     <input type="file"  (change)="handleFileInput($event.target.files)"></label>
 
   <button  (click)="saveAvatar(avatarForm)">Save image</button><br>
 
-  <label>Or Delete Existed:<br></label>
+  <label>Existed image:<br></label>
   <!--<div ><img [src]="'assets/images/'+meal.avatar" alt=""></div>-->
-  <div ><img [src]="'/ava/'+meal.avatar" alt=""></div>
-  <button  (click)="deleteAvatar()">Delete Image</button><br>
+  <div ><img [src]="'ava/'+meal.avatar" alt=""></div>
+  <!--<button  (click)="deleteAvatar()">Delete Image</button><br>-->
 </form>
 
 
@@ -152,7 +152,7 @@
       <td>{{m.quantity}}</td>
       <td>{{m.price}}</td>
       <!--<td><img [src]="'assets/images/'+m.avatar" alt=""></td>-->
-      <td><img [src]="'/ava/'+m.avatar" alt=""></td>
+      <td><img [src]="'ava/'+m.avatar" alt=""></td>
       <td>
         <button class="btn btn-outline-success btn-sm" (click)="update(m)" >UPDATE</button>
         <button class="btn btn-outline-success btn-sm" (click)="showAvatarForm(m)">Add or update an image</button>
