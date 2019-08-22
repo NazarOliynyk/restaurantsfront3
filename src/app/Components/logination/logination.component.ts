@@ -15,12 +15,13 @@ export class LoginationComponent implements OnInit {
   user: User = new User();
   restaurant: Restaurant = new Restaurant();
   client: Client = new Client();
-  responseLogination = '';
+  response = '';
   emailToRestorePass = '';
   showLoginForm = false;
   showEmailForm = false;
   showForgotPasswordForm = false;
-  responseChangePass = '';
+  responseChangePassword = '';
+  modal;
 
   constructor(
     private mainControllerService: MainControllerService,
@@ -29,6 +30,7 @@ export class LoginationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.modal = document.getElementById('modalMessage');
     this.activatedRoute.queryParams.subscribe((data) => {
       localStorage.clear();
       this.user = new User();
@@ -85,11 +87,10 @@ export class LoginationComponent implements OnInit {
             this.router.navigate(['client'], {queryParams: this.client});
           }
         }
-
-        this.responseLogination = 'Access successful!'; },
+        this.showModal('Access successful!'); },
       err => {console.log('err: ' + err.toString());
               this.showLoginForm = true;
-              this.responseLogination = 'Access denied!'; }
+              this.showModal('Access denied!'); }
     );
   }
 
@@ -126,10 +127,10 @@ export class LoginationComponent implements OnInit {
             this.client = JSON.parse(userLogged);
             this.router.navigate(['client'], {queryParams: this.client});
           }
-          this.responseLogination = 'Access successful!'; },
+          this.showModal('Access successful!'); },
         err => {console.log('err: ' + err.toString());
                 this.showLoginForm = true;
-                this.responseLogination = 'Access denied!'; }
+                this.showModal('Access denied!');    }
       );
     });
   }
@@ -146,9 +147,21 @@ export class LoginationComponent implements OnInit {
           subscribe(res => {
             console.log(res.text);
             alert(res.text) ; });
-          this.responseChangePass = 'Account matches';
-        } else { this.responseChangePass = 'Email does not match to any account!'; }
+          this.showModal('Account matches');
+        } else {
+          this.showModal('Email does not match to any account!');
+        }
       }
     });
   }
+
+  showModal(message: string) {
+    this.response = message;
+    this.modal.style.display = 'block';
+  }
+
+  closeModal() {
+    this.modal.style.display = 'none';
+  }
+
 }

@@ -9,8 +9,6 @@
   </div>
 </nav>
 
-<h3 style="background: deeppink">{{responseRegistration}}</h3>
-
 <form class="regForm"> <h3>Registration forms:</h3>
 <form *ngIf="chooseFormRestaurant" #formRegisterR="ngForm">
 
@@ -112,6 +110,17 @@
 </form>
 
 </form>
+
+<div id="modalMessage" class="modal">
+  <div class="modal-response">
+    <div>
+      <h3>Server responded:</h3>
+      <hr>
+      <h3>{{responseRegistration}}</h3>
+    </div>
+    <button class="btn btn-info" (click)="closeModal()">Close</button>
+  </div>
+</div>
 <router-outlet></router-outlet>
 
 

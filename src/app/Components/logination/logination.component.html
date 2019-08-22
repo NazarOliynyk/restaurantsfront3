@@ -9,7 +9,6 @@
   </div>
 </nav>
 
-<h3 style="background: red">{{responseLogination}}</h3>
 
 <form *ngIf="showLoginForm" #formLoginL="ngForm" class="logForm">
 
@@ -78,6 +77,16 @@
           (click)="sendRequestNewPass(emailToRestorePass)" >Send Request</button>
 </form>
 
-<div class="respChangePas">{{responseChangePass}}</div>
+
+<div id="modalMessage" class="modal">
+  <div class="modal-response">
+    <div>
+      <h3>Server responded:</h3>
+      <hr>
+      <h3>{{response}}</h3>
+    </div>
+    <button class="btn btn-info" (click)="closeModal()">Close</button>
+  </div>
+</div>
 
 <router-outlet></router-outlet>

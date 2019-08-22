@@ -16,12 +16,14 @@ export class RegistrationComponent implements OnInit {
   responseRegistration = '';
   chooseFormRestaurant = false;
   chooseFormClient = false;
+  modal;
 
   constructor(
     private mainControllerService: MainControllerService
   ) { }
 
   ngOnInit() {
+    this.modal = document.getElementById('modalMessage');
   }
 
   regRest() {
@@ -41,9 +43,9 @@ export class RegistrationComponent implements OnInit {
 
     this.mainControllerService.saveRestaurant(this.restaurant)
       .subscribe(value => {
-          this.responseRegistration = value.text; },
+          this.showModal(value.text); },
         error1 => { console.log(error1);
-                    this.responseRegistration = 'Registration Failed'; } );
+                    this.showModal('Registration Failed'); } );
   }
 
   registerClient(formRegisterC: HTMLFormElement) {
@@ -53,10 +55,19 @@ export class RegistrationComponent implements OnInit {
 
     this.mainControllerService.saveClient(this.client)
       .subscribe(value => {
-          this.responseRegistration = value.text;
-          console.log(value.text); },
+          this.showModal(value.text); },
         error1 => { console.log(error1);
-                    this.responseRegistration = 'Registration Failed'; } );
+                    this.showModal('Registration Failed'); } );
   }
+
+  showModal(message: string) {
+    this.responseRegistration = message;
+    this.modal.style.display = 'block';
+  }
+
+  closeModal() {
+    this.modal.style.display = 'none';
+  }
+
 
 }
