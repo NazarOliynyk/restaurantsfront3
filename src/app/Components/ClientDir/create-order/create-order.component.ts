@@ -115,6 +115,10 @@ export class CreateOrderComponent implements OnInit {
   }
 
   backToRestaurants() {
+    this.mealsOfMS = [];
+    this.mealsToBeAdded = [];
+    this.total = 0;
+    this.showPreliminaryMenu = false;
     this.showRestaurantList = true;
     this.showFillOrder = false;
   }
