@@ -20,12 +20,14 @@ export class ClientComponent implements OnInit {
   oldPassword: string;
   newPassword: string;
   changePasswordF = false;
+  modal;
 
   constructor(private activatedRoute: ActivatedRoute,
               private mainControllerService: MainControllerService,
               private router: Router) { }
 
   ngOnInit() {
+    this.modal = document.getElementById('modalMessage1');
     this.activatedRoute.queryParams.subscribe((data: Client) => {
       this.client = data;
     });
@@ -120,5 +122,9 @@ export class ClientComponent implements OnInit {
         err => {console.log('err: ' + err.toString());
                 alert('Failed to delete!'); } );
     }
+  }
+
+  closeModal() {
+    this.modal.style.display = 'none';
   }
 }
